@@ -3,279 +3,670 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		30A749552C7657BF00265C29 /* aapt in Resources */ = {isa = PBXBuildFile; fileRef = 30A749542C7657BF00265C29 /* aapt */; };
-		E799642E188D34C000BFAA22 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E799642D188D34C000BFAA22 /* QuickLook.framework */; };
-		E7996430188D34C000BFAA22 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E799642F188D34C000BFAA22 /* ApplicationServices.framework */; };
-		E7996432188D34C000BFAA22 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7996431188D34C000BFAA22 /* CoreServices.framework */; };
-		E7996434188D34C000BFAA22 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7996433188D34C000BFAA22 /* CoreFoundation.framework */; };
-		E799643A188D34C000BFAA22 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7996438188D34C000BFAA22 /* InfoPlist.strings */; };
-		E799643C188D34C000BFAA22 /* GenerateThumbnailForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = E799643B188D34C000BFAA22 /* GenerateThumbnailForURL.m */; };
-		E799643E188D34C000BFAA22 /* GeneratePreviewForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = E799643D188D34C000BFAA22 /* GeneratePreviewForURL.m */; };
-		E7996440188D34C000BFAA22 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = E799643F188D34C000BFAA22 /* main.c */; };
-		E7B4ACC9188DC6EC009C713E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7B4ACC8188DC6EC009C713E /* Cocoa.framework */; };
-		E7B4AD3A188E7695009C713E /* HZAndroidPackage.h in Headers */ = {isa = PBXBuildFile; fileRef = E7B4AD38188E7695009C713E /* HZAndroidPackage.h */; };
-		E7B4AD3B188E7695009C713E /* HZAndroidPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B4AD39188E7695009C713E /* HZAndroidPackage.m */; };
+		308EF9762FFD704100FE33B9 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 308EF8EF2FFD5FBF00FE33B9 /* Quartz.framework */; };
+		308EF9822FFD704100FE33B9 /* QuickLookAPKPreview.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 308EF9752FFD704100FE33B9 /* QuickLookAPKPreview.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		308EF98D2FFD704E00FE33B9 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB0588C35AAE0407564D214C /* QuickLookThumbnailing.framework */; };
+		308EF98E2FFD704E00FE33B9 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 308EF8EF2FFD5FBF00FE33B9 /* Quartz.framework */; };
+		308EF9952FFD704E00FE33B9 /* QuickLookAPKThumbnail.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 308EF98C2FFD704E00FE33B9 /* QuickLookAPKThumbnail.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		308EF9802FFD704100FE33B9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 07C7874636C64156FCE17A36 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 308EF9742FFD704100FE33B9;
+			remoteInfo = QuickLookAPKPreview;
+		};
+		308EF9932FFD704E00FE33B9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 07C7874636C64156FCE17A36 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 308EF98B2FFD704E00FE33B9;
+			remoteInfo = QuickLookAPKThumbnail;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		308EF9872FFD704100FE33B9 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				308EF9822FFD704100FE33B9 /* QuickLookAPKPreview.appex in Embed Foundation Extensions */,
+				308EF9952FFD704E00FE33B9 /* QuickLookAPKThumbnail.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		30A749542C7657BF00265C29 /* aapt */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = aapt; sourceTree = "<group>"; };
-		30C2E6E62C7435A90006DA7C /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		E799642A188D34C000BFAA22 /* QuickLookAPK.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickLookAPK.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
-		E799642D188D34C000BFAA22 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
-		E799642F188D34C000BFAA22 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
-		E7996431188D34C000BFAA22 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
-		E7996433188D34C000BFAA22 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		E7996437188D34C000BFAA22 /* QuickLookAPK-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "QuickLookAPK-Info.plist"; sourceTree = "<group>"; };
-		E7996439188D34C000BFAA22 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		E799643B188D34C000BFAA22 /* GenerateThumbnailForURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GenerateThumbnailForURL.m; sourceTree = "<group>"; };
-		E799643D188D34C000BFAA22 /* GeneratePreviewForURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GeneratePreviewForURL.m; sourceTree = "<group>"; };
-		E799643F188D34C000BFAA22 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		E7996441188D34C000BFAA22 /* QuickLookAPK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QuickLookAPK-Prefix.pch"; sourceTree = "<group>"; };
-		E7B4ACC6188DC5F1009C713E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		E7B4ACC8188DC6EC009C713E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		E7B4AD38188E7695009C713E /* HZAndroidPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZAndroidPackage.h; sourceTree = "<group>"; };
-		E7B4AD39188E7695009C713E /* HZAndroidPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZAndroidPackage.m; sourceTree = "<group>"; };
+		039E70FB16FC79E7BD31731E /* QuickLookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLookUI.framework; path = System/Library/Frameworks/QuickLookUI.framework; sourceTree = SDKROOT; };
+		1254EC2B5A2DF03943E2669F /* ThumbnailProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThumbnailProvider.h; sourceTree = "<group>"; };
+		28807E56FC9CBFDA48896031 /* PreviewProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreviewProvider.h; sourceTree = "<group>"; };
+		308EF8E42FFC80A600FE33B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		308EF8E62FFC80AD00FE33B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		308EF8E92FFC80DD00FE33B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		308EF8EF2FFD5FBF00FE33B9 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		308EF9662FFD703100FE33B9 /* QuickLookAPK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickLookAPK.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		308EF9752FFD704100FE33B9 /* QuickLookAPKPreview.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = QuickLookAPKPreview.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		308EF98C2FFD704E00FE33B9 /* QuickLookAPKThumbnail.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = QuickLookAPKThumbnail.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A65B9A056300B9B07B833C3 /* ThumbnailProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThumbnailProvider.m; sourceTree = "<group>"; };
+		5A72610E5783B6D4A20C272C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		7415764223FF05FA0584DAE1 /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
+		8F34FC185D013E642E6E8690 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		952F8FBAD1DF1085C489C697 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		CB0588C35AAE0407564D214C /* QuickLookThumbnailing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLookThumbnailing.framework; path = System/Library/Frameworks/QuickLookThumbnailing.framework; sourceTree = SDKROOT; };
+		E23B6B6B076BBFE140120196 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		FF93C565454C63B4559131D8 /* PreviewProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreviewProvider.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		308EF9832FFD704100FE33B9 /* Exceptions for "QuickLookAPKPreview" folder in "QuickLookAPKPreview" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 308EF9742FFD704100FE33B9 /* QuickLookAPKPreview */;
+		};
+		308EF9962FFD704E00FE33B9 /* Exceptions for "QuickLookAPKThumbnail" folder in "QuickLookAPKThumbnail" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 308EF98B2FFD704E00FE33B9 /* QuickLookAPKThumbnail */;
+		};
+		308EF99C2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "QuickLookAPK" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Shared/aapt,
+				Shared/HZAndroidPackage.m,
+			);
+			target = 308EF9652FFD703100FE33B9 /* QuickLookAPK */;
+		};
+		308EF99D2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "QuickLookAPKPreview" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Shared/aapt,
+			);
+			target = 308EF9742FFD704100FE33B9 /* QuickLookAPKPreview */;
+		};
+		308EF99E2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "QuickLookAPKThumbnail" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Shared/aapt,
+			);
+			target = 308EF98B2FFD704E00FE33B9 /* QuickLookAPKThumbnail */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		308EF9672FFD703100FE33B9 /* QuickLookAPK */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				308EF99C2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "QuickLookAPK" target */,
+				308EF99D2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "QuickLookAPKPreview" target */,
+				308EF99E2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "QuickLookAPKThumbnail" target */,
+			);
+			path = QuickLookAPK;
+			sourceTree = "<group>";
+		};
+		308EF9772FFD704100FE33B9 /* QuickLookAPKPreview */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				308EF9832FFD704100FE33B9 /* Exceptions for "QuickLookAPKPreview" folder in "QuickLookAPKPreview" target */,
+			);
+			path = QuickLookAPKPreview;
+			sourceTree = "<group>";
+		};
+		308EF98F2FFD704E00FE33B9 /* QuickLookAPKThumbnail */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				308EF9962FFD704E00FE33B9 /* Exceptions for "QuickLookAPKThumbnail" folder in "QuickLookAPKThumbnail" target */,
+			);
+			path = QuickLookAPKThumbnail;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
-		E7996425188D34C000BFAA22 /* Frameworks */ = {
+		308EF9632FFD703100FE33B9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7B4ACC9188DC6EC009C713E /* Cocoa.framework in Frameworks */,
-				E7996434188D34C000BFAA22 /* CoreFoundation.framework in Frameworks */,
-				E799642E188D34C000BFAA22 /* QuickLook.framework in Frameworks */,
-				E7996432188D34C000BFAA22 /* CoreServices.framework in Frameworks */,
-				E7996430188D34C000BFAA22 /* ApplicationServices.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		308EF9722FFD704100FE33B9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				308EF9762FFD704100FE33B9 /* Quartz.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		308EF9892FFD704E00FE33B9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				308EF98D2FFD704E00FE33B9 /* QuickLookThumbnailing.framework in Frameworks */,
+				308EF98E2FFD704E00FE33B9 /* Quartz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E799641F188D34C000BFAA22 = {
+		11541F513DC1B9DFB4EF77D5 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				E7996435188D34C000BFAA22 /* QuickLookAPK */,
-				E799642C188D34C000BFAA22 /* Frameworks */,
-				E799642B188D34C000BFAA22 /* Products */,
+				308EF8E92FFC80DD00FE33B9 /* Info.plist */,
+				E23B6B6B076BBFE140120196 /* AppDelegate.h */,
+				5A72610E5783B6D4A20C272C /* AppDelegate.m */,
+				8F34FC185D013E642E6E8690 /* main.m */,
 			);
+			path = App;
 			sourceTree = "<group>";
 		};
-		E799642B188D34C000BFAA22 /* Products */ = {
+		4FDD1C733C6233A32C9C0C79 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E799642A188D34C000BFAA22 /* QuickLookAPK.qlgenerator */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		E799642C188D34C000BFAA22 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				30C2E6E62C7435A90006DA7C /* libz.tbd */,
-				E7B4ACC8188DC6EC009C713E /* Cocoa.framework */,
-				E7B4ACC6188DC5F1009C713E /* Foundation.framework */,
-				E799642D188D34C000BFAA22 /* QuickLook.framework */,
-				E799642F188D34C000BFAA22 /* ApplicationServices.framework */,
-				E7996431188D34C000BFAA22 /* CoreServices.framework */,
-				E7996433188D34C000BFAA22 /* CoreFoundation.framework */,
+				952F8FBAD1DF1085C489C697 /* Cocoa.framework */,
+				CB0588C35AAE0407564D214C /* QuickLookThumbnailing.framework */,
+				039E70FB16FC79E7BD31731E /* QuickLookUI.framework */,
+				7415764223FF05FA0584DAE1 /* UniformTypeIdentifiers.framework */,
+				308EF8EF2FFD5FBF00FE33B9 /* Quartz.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		E7996435188D34C000BFAA22 /* QuickLookAPK */ = {
+		6E39327FFE27BC2D849D3CBD /* ThumbnailExtension */ = {
 			isa = PBXGroup;
 			children = (
-				30A749542C7657BF00265C29 /* aapt */,
-				E799643B188D34C000BFAA22 /* GenerateThumbnailForURL.m */,
-				E799643D188D34C000BFAA22 /* GeneratePreviewForURL.m */,
-				E799643F188D34C000BFAA22 /* main.c */,
-				E7B4AD38188E7695009C713E /* HZAndroidPackage.h */,
-				E7B4AD39188E7695009C713E /* HZAndroidPackage.m */,
-				E7996436188D34C000BFAA22 /* Supporting Files */,
+				308EF8E42FFC80A600FE33B9 /* Info.plist */,
+				1254EC2B5A2DF03943E2669F /* ThumbnailProvider.h */,
+				4A65B9A056300B9B07B833C3 /* ThumbnailProvider.m */,
 			);
-			path = QuickLookAPK;
+			path = ThumbnailExtension;
 			sourceTree = "<group>";
 		};
-		E7996436188D34C000BFAA22 /* Supporting Files */ = {
+		9233ABA0763F77C8ED0A431F = {
 			isa = PBXGroup;
 			children = (
-				E7996437188D34C000BFAA22 /* QuickLookAPK-Info.plist */,
-				E7996438188D34C000BFAA22 /* InfoPlist.strings */,
-				E7996441188D34C000BFAA22 /* QuickLookAPK-Prefix.pch */,
+				308EF9672FFD703100FE33B9 /* QuickLookAPK */,
+				308EF9772FFD704100FE33B9 /* QuickLookAPKPreview */,
+				308EF98F2FFD704E00FE33B9 /* QuickLookAPKThumbnail */,
+				9A94487A0EA06CB183D33429 /* QuickLookAPKOld */,
+				4FDD1C733C6233A32C9C0C79 /* Frameworks */,
+				A61FA03E730C4FA3D8DAF981 /* Products */,
 			);
-			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		997B153FA6FDEEAF18FCF024 /* PreviewExtension */ = {
+			isa = PBXGroup;
+			children = (
+				308EF8E62FFC80AD00FE33B9 /* Info.plist */,
+				28807E56FC9CBFDA48896031 /* PreviewProvider.h */,
+				FF93C565454C63B4559131D8 /* PreviewProvider.m */,
+			);
+			path = PreviewExtension;
+			sourceTree = "<group>";
+		};
+		9A94487A0EA06CB183D33429 /* QuickLookAPKOld */ = {
+			isa = PBXGroup;
+			children = (
+				11541F513DC1B9DFB4EF77D5 /* App */,
+				997B153FA6FDEEAF18FCF024 /* PreviewExtension */,
+				6E39327FFE27BC2D849D3CBD /* ThumbnailExtension */,
+			);
+			path = QuickLookAPKOld;
+			sourceTree = "<group>";
+		};
+		A61FA03E730C4FA3D8DAF981 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				308EF9662FFD703100FE33B9 /* QuickLookAPK.app */,
+				308EF9752FFD704100FE33B9 /* QuickLookAPKPreview.appex */,
+				308EF98C2FFD704E00FE33B9 /* QuickLookAPKThumbnail.appex */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		E7996426188D34C000BFAA22 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E7B4AD3A188E7695009C713E /* HZAndroidPackage.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
-		E7996429188D34C000BFAA22 /* QuickLookAPK */ = {
+		308EF9652FFD703100FE33B9 /* QuickLookAPK */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E7996444188D34C000BFAA22 /* Build configuration list for PBXNativeTarget "QuickLookAPK" */;
+			buildConfigurationList = 308EF96E2FFD703200FE33B9 /* Build configuration list for PBXNativeTarget "QuickLookAPK" */;
 			buildPhases = (
-				E7996424188D34C000BFAA22 /* Sources */,
-				E7996425188D34C000BFAA22 /* Frameworks */,
-				E7996426188D34C000BFAA22 /* Headers */,
-				E7996427188D34C000BFAA22 /* Resources */,
+				308EF9622FFD703100FE33B9 /* Sources */,
+				308EF9632FFD703100FE33B9 /* Frameworks */,
+				308EF9642FFD703100FE33B9 /* Resources */,
+				308EF9872FFD704100FE33B9 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				308EF9812FFD704100FE33B9 /* PBXTargetDependency */,
+				308EF9942FFD704E00FE33B9 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				308EF9672FFD703100FE33B9 /* QuickLookAPK */,
+			);
+			name = QuickLookAPK;
+			packageProductDependencies = (
+			);
+			productName = QuickLookAPK;
+			productReference = 308EF9662FFD703100FE33B9 /* QuickLookAPK.app */;
+			productType = "com.apple.product-type.application";
+		};
+		308EF9742FFD704100FE33B9 /* QuickLookAPKPreview */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 308EF9842FFD704100FE33B9 /* Build configuration list for PBXNativeTarget "QuickLookAPKPreview" */;
+			buildPhases = (
+				308EF9712FFD704100FE33B9 /* Sources */,
+				308EF9722FFD704100FE33B9 /* Frameworks */,
+				308EF9732FFD704100FE33B9 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = QuickLookAPK;
-			productName = QuickLookAPK;
-			productReference = E799642A188D34C000BFAA22 /* QuickLookAPK.qlgenerator */;
-			productType = "com.apple.product-type.bundle";
+			fileSystemSynchronizedGroups = (
+				308EF9772FFD704100FE33B9 /* QuickLookAPKPreview */,
+			);
+			name = QuickLookAPKPreview;
+			packageProductDependencies = (
+			);
+			productName = QuickLookAPKPreview;
+			productReference = 308EF9752FFD704100FE33B9 /* QuickLookAPKPreview.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		308EF98B2FFD704E00FE33B9 /* QuickLookAPKThumbnail */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 308EF9972FFD704E00FE33B9 /* Build configuration list for PBXNativeTarget "QuickLookAPKThumbnail" */;
+			buildPhases = (
+				308EF9882FFD704E00FE33B9 /* Sources */,
+				308EF9892FFD704E00FE33B9 /* Frameworks */,
+				308EF98A2FFD704E00FE33B9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				308EF98F2FFD704E00FE33B9 /* QuickLookAPKThumbnail */,
+			);
+			name = QuickLookAPKThumbnail;
+			packageProductDependencies = (
+			);
+			productName = QuickLookAPKThumbnail;
+			productReference = 308EF98C2FFD704E00FE33B9 /* QuickLookAPKThumbnail.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		E7996420188D34C000BFAA22 /* Project object */ = {
+		07C7874636C64156FCE17A36 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1320;
-				ORGANIZATIONNAME = "Hezi Cohen";
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 2660;
+				LastUpgradeCheck = 2660;
+				TargetAttributes = {
+					308EF9652FFD703100FE33B9 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					308EF9742FFD704100FE33B9 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					308EF98B2FFD704E00FE33B9 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+				};
 			};
-			buildConfigurationList = E7996423188D34C000BFAA22 /* Build configuration list for PBXProject "QuickLookAPK" */;
-			compatibilityVersion = "Xcode 12.0";
-			developmentRegion = English;
+			buildConfigurationList = 302B329AED027B7EAA581EEB /* Build configuration list for PBXProject "QuickLookAPK" */;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
+				Base,
 				en,
 			);
-			mainGroup = E799641F188D34C000BFAA22;
-			productRefGroup = E799642B188D34C000BFAA22 /* Products */;
+			mainGroup = 9233ABA0763F77C8ED0A431F;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = A61FA03E730C4FA3D8DAF981 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E7996429188D34C000BFAA22 /* QuickLookAPK */,
+				308EF9652FFD703100FE33B9 /* QuickLookAPK */,
+				308EF9742FFD704100FE33B9 /* QuickLookAPKPreview */,
+				308EF98B2FFD704E00FE33B9 /* QuickLookAPKThumbnail */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		E7996427188D34C000BFAA22 /* Resources */ = {
+		308EF9642FFD703100FE33B9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E799643A188D34C000BFAA22 /* InfoPlist.strings in Resources */,
-				30A749552C7657BF00265C29 /* aapt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		308EF9732FFD704100FE33B9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		308EF98A2FFD704E00FE33B9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		E7996424188D34C000BFAA22 /* Sources */ = {
+		308EF9622FFD703100FE33B9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7B4AD3B188E7695009C713E /* HZAndroidPackage.m in Sources */,
-				E799643C188D34C000BFAA22 /* GenerateThumbnailForURL.m in Sources */,
-				E799643E188D34C000BFAA22 /* GeneratePreviewForURL.m in Sources */,
-				E7996440188D34C000BFAA22 /* main.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		308EF9712FFD704100FE33B9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		308EF9882FFD704E00FE33B9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		E7996438188D34C000BFAA22 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E7996439188D34C000BFAA22 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
+/* Begin PBXTargetDependency section */
+		308EF9812FFD704100FE33B9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 308EF9742FFD704100FE33B9 /* QuickLookAPKPreview */;
+			targetProxy = 308EF9802FFD704100FE33B9 /* PBXContainerItemProxy */;
 		};
-/* End PBXVariantGroup section */
+		308EF9942FFD704E00FE33B9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 308EF98B2FFD704E00FE33B9 /* QuickLookAPKThumbnail */;
+			targetProxy = 308EF9932FFD704E00FE33B9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		E7996442188D34C000BFAA22 /* Debug */ = {
+		308EF96F2FFD703200FE33B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hezicohen.qlapk.QuickLookAPK;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
-		E7996443188D34C000BFAA22 /* Release */ = {
+		308EF9702FFD703200FE33B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hezicohen.qlapk.QuickLookAPK;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		308EF9852FFD704100FE33B9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XNAZEWFH6C;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = QuickLookAPKPreview/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = QuickLookAPKPreview;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hezicohen.qlapk.QuickLookAPK.QuickLookAPKPreview;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		308EF9862FFD704100FE33B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XNAZEWFH6C;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = QuickLookAPKPreview/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = QuickLookAPKPreview;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hezicohen.qlapk.QuickLookAPK.QuickLookAPKPreview;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		308EF9982FFD704E00FE33B9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XNAZEWFH6C;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = QuickLookAPKThumbnail/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = QuickLookAPKThumbnail;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hezicohen.qlapk.QuickLookAPK.QuickLookAPKThumbnail;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		308EF9992FFD704E00FE33B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XNAZEWFH6C;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = QuickLookAPKThumbnail/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = QuickLookAPKThumbnail;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hezicohen.qlapk.QuickLookAPK.QuickLookAPKThumbnail;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		A1110F0E51D3EE3D2733F273 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
@@ -288,81 +679,151 @@
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 2.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		E4D18BEBBB0A539A9168A7B4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				GENERATE_INFOPLIST_FILE = NO;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 2.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-			};
-			name = Release;
-		};
-		E7996445188D34C000BFAA22 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "QuickLookAPK/QuickLookAPK-Prefix.pch";
-				INFOPLIST_FILE = "QuickLookAPK/QuickLookAPK-Info.plist";
-				INSTALL_PATH = /Library/QuickLook;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hezicohen.qlapk;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = qlgenerator;
-			};
-			name = Debug;
-		};
-		E7996446188D34C000BFAA22 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_OPTIMIZATION_LEVEL = fast;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "QuickLookAPK/QuickLookAPK-Prefix.pch";
-				INFOPLIST_FILE = "QuickLookAPK/QuickLookAPK-Info.plist";
-				INSTALL_PATH = /Library/QuickLook;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hezicohen.qlapk;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = qlgenerator;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E7996423188D34C000BFAA22 /* Build configuration list for PBXProject "QuickLookAPK" */ = {
+		302B329AED027B7EAA581EEB /* Build configuration list for PBXProject "QuickLookAPK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E7996442188D34C000BFAA22 /* Debug */,
-				E7996443188D34C000BFAA22 /* Release */,
+				A1110F0E51D3EE3D2733F273 /* Debug */,
+				E4D18BEBBB0A539A9168A7B4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
-		E7996444188D34C000BFAA22 /* Build configuration list for PBXNativeTarget "QuickLookAPK" */ = {
+		308EF96E2FFD703200FE33B9 /* Build configuration list for PBXNativeTarget "QuickLookAPK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E7996445188D34C000BFAA22 /* Debug */,
-				E7996446188D34C000BFAA22 /* Release */,
+				308EF96F2FFD703200FE33B9 /* Debug */,
+				308EF9702FFD703200FE33B9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
+		};
+		308EF9842FFD704100FE33B9 /* Build configuration list for PBXNativeTarget "QuickLookAPKPreview" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				308EF9852FFD704100FE33B9 /* Debug */,
+				308EF9862FFD704100FE33B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		308EF9972FFD704E00FE33B9 /* Build configuration list for PBXNativeTarget "QuickLookAPKThumbnail" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				308EF9982FFD704E00FE33B9 /* Debug */,
+				308EF9992FFD704E00FE33B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = E7996420188D34C000BFAA22 /* Project object */;
+	rootObject = 07C7874636C64156FCE17A36 /* Project object */;
 }

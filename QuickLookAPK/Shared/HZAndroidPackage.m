@@ -473,7 +473,7 @@ NSString *androidPackageHTMLPreview(HZAndroidPackage *package)
 
 - (void)load
 {
-    NSString *aaptPath = [[[NSBundle bundleWithIdentifier:@"com.hezicohen.qlapk"] resourcePath] stringByAppendingPathComponent:@"aapt"];
+    NSString *aaptPath = [[[NSBundle bundleForClass:[HZAndroidPackage class]] resourcePath] stringByAppendingPathComponent:@"aapt"];
     
     NSTask *task = [[NSTask alloc] init];
     [task setLaunchPath:[aaptPath stringByExpandingTildeInPath]];
@@ -641,7 +641,7 @@ NSString *androidPackageHTMLPreview(HZAndroidPackage *package)
 }
 
 NSString *grepResources(HZAndroidPackage *package, NSString *grepWhat, NSString *grepParam){
-    NSString *aaptPath = [[[NSBundle bundleWithIdentifier:@"com.hezicohen.qlapk"] resourcePath] stringByAppendingPathComponent:@"aapt"];
+    NSString *aaptPath = [[[NSBundle bundleForClass:[HZAndroidPackage class]] resourcePath] stringByAppendingPathComponent:@"aapt"];
     
     NSTask *dumpTask = [[NSTask alloc] init];
     [dumpTask setLaunchPath:[aaptPath stringByExpandingTildeInPath]];
