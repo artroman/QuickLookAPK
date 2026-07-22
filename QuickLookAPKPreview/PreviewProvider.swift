@@ -5,12 +5,10 @@
 //  Created by Roman on 7. 7. 2026..
 //
 
-import Cocoa
 import Quartz
 
 class PreviewProvider: QLPreviewProvider, QLPreviewingController {
     
-
     /*
      Use a QLPreviewProvider to provide data-based previews.
      
@@ -31,24 +29,24 @@ class PreviewProvider: QLPreviewProvider, QLPreviewingController {
      */
     
     func providePreview(for request: QLFilePreviewRequest) async throws -> QLPreviewReply {
-    
+        guard let apk = HZAndroidPackage(path: request.fileURL.path) else {
+            throw CocoaError(.fileReadUnknown)
+        }
+        
+        let htmlData = Data(androidPackageHTMLPreview(apk).utf8)
+        
         //You can create a QLPreviewReply in several ways, depending on the format of the data you want to return.
         //To return Data of a supported content type:
-        
-        let contentType = UTType.plainText // replace with your data type
-        
-        let reply = QLPreviewReply.init(dataOfContentType: contentType, contentSize: CGSize.init(width: 800, height: 800)) { (replyToUpdate : QLPreviewReply) in
-
-            let data = Data("Hello world".utf8)
+        let reply = QLPreviewReply.init(
+            dataOfContentType: .html,
+            contentSize: CGSize.init(width: 800, height: 800)
+        ) {(replyToUpdate : QLPreviewReply) in
             
             //setting the stringEncoding for text and html data is optional and defaults to String.Encoding.utf8
             replyToUpdate.stringEncoding = .utf8
             
-            //initialize your data here
-            
-            return data
+            return htmlData
         }
-                
         return reply
     }
 }

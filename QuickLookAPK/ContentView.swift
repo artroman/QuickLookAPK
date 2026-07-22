@@ -14,16 +14,16 @@ struct ContentView: View {
             Image(systemName: "shippingbox")
                 .font(.system(size: 48))
                 .foregroundStyle(.tint)
-
+            
             Text("QuickLook APK")
                 .font(.title2)
                 .fontWeight(.semibold)
-
+            
             Text("Preview and thumbnail Android .apk files in Finder and Quick Look.")
                 .font(.callout)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
-
+            
             Button {
                 openExtensionsSettings()
             } label: {
@@ -34,7 +34,7 @@ struct ContentView: View {
         .padding(32)
         .frame(minWidth: 360, minHeight: 260)
     }
-
+    
     /// Opens System Settings to the Extensions pane, where the Quick Look
     /// preview and thumbnail extensions can be enabled.
     private func openExtensionsSettings() {

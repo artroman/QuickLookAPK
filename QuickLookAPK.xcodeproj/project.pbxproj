@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		308EF9762FFD704100FE33B9 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 308EF8EF2FFD5FBF00FE33B9 /* Quartz.framework */; };
-		308EF9822FFD704100FE33B9 /* QuickLookAPKPreview.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 308EF9752FFD704100FE33B9 /* QuickLookAPKPreview.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		308EF9822FFD704100FE33B9 /* APK Preview.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 308EF9752FFD704100FE33B9 /* APK Preview.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		308EF98D2FFD704E00FE33B9 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB0588C35AAE0407564D214C /* QuickLookThumbnailing.framework */; };
 		308EF98E2FFD704E00FE33B9 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 308EF8EF2FFD5FBF00FE33B9 /* Quartz.framework */; };
-		308EF9952FFD704E00FE33B9 /* QuickLookAPKThumbnail.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 308EF98C2FFD704E00FE33B9 /* QuickLookAPKThumbnail.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		308EF9952FFD704E00FE33B9 /* APK Thumbnail.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 308EF98C2FFD704E00FE33B9 /* APK Thumbnail.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,8 +38,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				308EF9822FFD704100FE33B9 /* QuickLookAPKPreview.appex in Embed Foundation Extensions */,
-				308EF9952FFD704E00FE33B9 /* QuickLookAPKThumbnail.appex in Embed Foundation Extensions */,
+				308EF9822FFD704100FE33B9 /* APK Preview.appex in Embed Foundation Extensions */,
+				308EF9952FFD704E00FE33B9 /* APK Thumbnail.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -47,62 +47,51 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		039E70FB16FC79E7BD31731E /* QuickLookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLookUI.framework; path = System/Library/Frameworks/QuickLookUI.framework; sourceTree = SDKROOT; };
-		1254EC2B5A2DF03943E2669F /* ThumbnailProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThumbnailProvider.h; sourceTree = "<group>"; };
-		28807E56FC9CBFDA48896031 /* PreviewProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreviewProvider.h; sourceTree = "<group>"; };
-		308EF8E42FFC80A600FE33B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		308EF8E62FFC80AD00FE33B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		308EF8E92FFC80DD00FE33B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		308EF8EF2FFD5FBF00FE33B9 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		308EF9662FFD703100FE33B9 /* QuickLookAPK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickLookAPK.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		308EF9752FFD704100FE33B9 /* QuickLookAPKPreview.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = QuickLookAPKPreview.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		308EF98C2FFD704E00FE33B9 /* QuickLookAPKThumbnail.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = QuickLookAPKThumbnail.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		4A65B9A056300B9B07B833C3 /* ThumbnailProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThumbnailProvider.m; sourceTree = "<group>"; };
-		5A72610E5783B6D4A20C272C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		7415764223FF05FA0584DAE1 /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
-		8F34FC185D013E642E6E8690 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		952F8FBAD1DF1085C489C697 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		308EF9752FFD704100FE33B9 /* APK Preview.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "APK Preview.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		308EF98C2FFD704E00FE33B9 /* APK Thumbnail.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "APK Thumbnail.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB0588C35AAE0407564D214C /* QuickLookThumbnailing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLookThumbnailing.framework; path = System/Library/Frameworks/QuickLookThumbnailing.framework; sourceTree = SDKROOT; };
-		E23B6B6B076BBFE140120196 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		FF93C565454C63B4559131D8 /* PreviewProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreviewProvider.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		308EF9832FFD704100FE33B9 /* Exceptions for "QuickLookAPKPreview" folder in "QuickLookAPKPreview" target */ = {
+		308EF9832FFD704100FE33B9 /* Exceptions for "QuickLookAPKPreview" folder in "APK Preview" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 308EF9742FFD704100FE33B9 /* QuickLookAPKPreview */;
+			target = 308EF9742FFD704100FE33B9 /* APK Preview */;
 		};
-		308EF9962FFD704E00FE33B9 /* Exceptions for "QuickLookAPKThumbnail" folder in "QuickLookAPKThumbnail" target */ = {
+		308EF9962FFD704E00FE33B9 /* Exceptions for "QuickLookAPKThumbnail" folder in "APK Thumbnail" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 308EF98B2FFD704E00FE33B9 /* QuickLookAPKThumbnail */;
+			target = 308EF98B2FFD704E00FE33B9 /* APK Thumbnail */;
 		};
 		308EF99C2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "QuickLookAPK" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Shared/aapt,
-				Shared/HZAndroidPackage.m,
+				aapt,
+				HZAndroidPackage.m,
 			);
 			target = 308EF9652FFD703100FE33B9 /* QuickLookAPK */;
 		};
-		308EF99D2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "QuickLookAPKPreview" target */ = {
+		308EF99D2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "APK Preview" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Shared/aapt,
+				aapt,
+				HZAndroidPackage.m,
 			);
-			target = 308EF9742FFD704100FE33B9 /* QuickLookAPKPreview */;
+			target = 308EF9742FFD704100FE33B9 /* APK Preview */;
 		};
-		308EF99E2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "QuickLookAPKThumbnail" target */ = {
+		308EF99E2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "APK Thumbnail" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Shared/aapt,
+				aapt,
+				HZAndroidPackage.m,
 			);
-			target = 308EF98B2FFD704E00FE33B9 /* QuickLookAPKThumbnail */;
+			target = 308EF98B2FFD704E00FE33B9 /* APK Thumbnail */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -111,8 +100,8 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				308EF99C2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "QuickLookAPK" target */,
-				308EF99D2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "QuickLookAPKPreview" target */,
-				308EF99E2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "QuickLookAPKThumbnail" target */,
+				308EF99D2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "APK Preview" target */,
+				308EF99E2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "APK Thumbnail" target */,
 			);
 			path = QuickLookAPK;
 			sourceTree = "<group>";
@@ -120,7 +109,7 @@
 		308EF9772FFD704100FE33B9 /* QuickLookAPKPreview */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				308EF9832FFD704100FE33B9 /* Exceptions for "QuickLookAPKPreview" folder in "QuickLookAPKPreview" target */,
+				308EF9832FFD704100FE33B9 /* Exceptions for "QuickLookAPKPreview" folder in "APK Preview" target */,
 			);
 			path = QuickLookAPKPreview;
 			sourceTree = "<group>";
@@ -128,7 +117,7 @@
 		308EF98F2FFD704E00FE33B9 /* QuickLookAPKThumbnail */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				308EF9962FFD704E00FE33B9 /* Exceptions for "QuickLookAPKThumbnail" folder in "QuickLookAPKThumbnail" target */,
+				308EF9962FFD704E00FE33B9 /* Exceptions for "QuickLookAPKThumbnail" folder in "APK Thumbnail" target */,
 			);
 			path = QuickLookAPKThumbnail;
 			sourceTree = "<group>";
@@ -163,37 +152,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		11541F513DC1B9DFB4EF77D5 /* App */ = {
-			isa = PBXGroup;
-			children = (
-				308EF8E92FFC80DD00FE33B9 /* Info.plist */,
-				E23B6B6B076BBFE140120196 /* AppDelegate.h */,
-				5A72610E5783B6D4A20C272C /* AppDelegate.m */,
-				8F34FC185D013E642E6E8690 /* main.m */,
-			);
-			path = App;
-			sourceTree = "<group>";
-		};
 		4FDD1C733C6233A32C9C0C79 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				952F8FBAD1DF1085C489C697 /* Cocoa.framework */,
 				CB0588C35AAE0407564D214C /* QuickLookThumbnailing.framework */,
-				039E70FB16FC79E7BD31731E /* QuickLookUI.framework */,
-				7415764223FF05FA0584DAE1 /* UniformTypeIdentifiers.framework */,
 				308EF8EF2FFD5FBF00FE33B9 /* Quartz.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		6E39327FFE27BC2D849D3CBD /* ThumbnailExtension */ = {
-			isa = PBXGroup;
-			children = (
-				308EF8E42FFC80A600FE33B9 /* Info.plist */,
-				1254EC2B5A2DF03943E2669F /* ThumbnailProvider.h */,
-				4A65B9A056300B9B07B833C3 /* ThumbnailProvider.m */,
-			);
-			path = ThumbnailExtension;
 			sourceTree = "<group>";
 		};
 		9233ABA0763F77C8ED0A431F = {
@@ -202,38 +167,17 @@
 				308EF9672FFD703100FE33B9 /* QuickLookAPK */,
 				308EF9772FFD704100FE33B9 /* QuickLookAPKPreview */,
 				308EF98F2FFD704E00FE33B9 /* QuickLookAPKThumbnail */,
-				9A94487A0EA06CB183D33429 /* QuickLookAPKOld */,
 				4FDD1C733C6233A32C9C0C79 /* Frameworks */,
 				A61FA03E730C4FA3D8DAF981 /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		997B153FA6FDEEAF18FCF024 /* PreviewExtension */ = {
-			isa = PBXGroup;
-			children = (
-				308EF8E62FFC80AD00FE33B9 /* Info.plist */,
-				28807E56FC9CBFDA48896031 /* PreviewProvider.h */,
-				FF93C565454C63B4559131D8 /* PreviewProvider.m */,
-			);
-			path = PreviewExtension;
-			sourceTree = "<group>";
-		};
-		9A94487A0EA06CB183D33429 /* QuickLookAPKOld */ = {
-			isa = PBXGroup;
-			children = (
-				11541F513DC1B9DFB4EF77D5 /* App */,
-				997B153FA6FDEEAF18FCF024 /* PreviewExtension */,
-				6E39327FFE27BC2D849D3CBD /* ThumbnailExtension */,
-			);
-			path = QuickLookAPKOld;
 			sourceTree = "<group>";
 		};
 		A61FA03E730C4FA3D8DAF981 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				308EF9662FFD703100FE33B9 /* QuickLookAPK.app */,
-				308EF9752FFD704100FE33B9 /* QuickLookAPKPreview.appex */,
-				308EF98C2FFD704E00FE33B9 /* QuickLookAPKThumbnail.appex */,
+				308EF9752FFD704100FE33B9 /* APK Preview.appex */,
+				308EF98C2FFD704E00FE33B9 /* APK Thumbnail.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -266,9 +210,9 @@
 			productReference = 308EF9662FFD703100FE33B9 /* QuickLookAPK.app */;
 			productType = "com.apple.product-type.application";
 		};
-		308EF9742FFD704100FE33B9 /* QuickLookAPKPreview */ = {
+		308EF9742FFD704100FE33B9 /* APK Preview */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 308EF9842FFD704100FE33B9 /* Build configuration list for PBXNativeTarget "QuickLookAPKPreview" */;
+			buildConfigurationList = 308EF9842FFD704100FE33B9 /* Build configuration list for PBXNativeTarget "APK Preview" */;
 			buildPhases = (
 				308EF9712FFD704100FE33B9 /* Sources */,
 				308EF9722FFD704100FE33B9 /* Frameworks */,
@@ -281,16 +225,16 @@
 			fileSystemSynchronizedGroups = (
 				308EF9772FFD704100FE33B9 /* QuickLookAPKPreview */,
 			);
-			name = QuickLookAPKPreview;
+			name = "APK Preview";
 			packageProductDependencies = (
 			);
 			productName = QuickLookAPKPreview;
-			productReference = 308EF9752FFD704100FE33B9 /* QuickLookAPKPreview.appex */;
+			productReference = 308EF9752FFD704100FE33B9 /* APK Preview.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		308EF98B2FFD704E00FE33B9 /* QuickLookAPKThumbnail */ = {
+		308EF98B2FFD704E00FE33B9 /* APK Thumbnail */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 308EF9972FFD704E00FE33B9 /* Build configuration list for PBXNativeTarget "QuickLookAPKThumbnail" */;
+			buildConfigurationList = 308EF9972FFD704E00FE33B9 /* Build configuration list for PBXNativeTarget "APK Thumbnail" */;
 			buildPhases = (
 				308EF9882FFD704E00FE33B9 /* Sources */,
 				308EF9892FFD704E00FE33B9 /* Frameworks */,
@@ -303,11 +247,11 @@
 			fileSystemSynchronizedGroups = (
 				308EF98F2FFD704E00FE33B9 /* QuickLookAPKThumbnail */,
 			);
-			name = QuickLookAPKThumbnail;
+			name = "APK Thumbnail";
 			packageProductDependencies = (
 			);
 			productName = QuickLookAPKThumbnail;
-			productReference = 308EF98C2FFD704E00FE33B9 /* QuickLookAPKThumbnail.appex */;
+			productReference = 308EF98C2FFD704E00FE33B9 /* APK Thumbnail.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -346,8 +290,8 @@
 			projectRoot = "";
 			targets = (
 				308EF9652FFD703100FE33B9 /* QuickLookAPK */,
-				308EF9742FFD704100FE33B9 /* QuickLookAPKPreview */,
-				308EF98B2FFD704E00FE33B9 /* QuickLookAPKThumbnail */,
+				308EF9742FFD704100FE33B9 /* APK Preview */,
+				308EF98B2FFD704E00FE33B9 /* APK Thumbnail */,
 			);
 		};
 /* End PBXProject section */
@@ -403,12 +347,12 @@
 /* Begin PBXTargetDependency section */
 		308EF9812FFD704100FE33B9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 308EF9742FFD704100FE33B9 /* QuickLookAPKPreview */;
+			target = 308EF9742FFD704100FE33B9 /* APK Preview */;
 			targetProxy = 308EF9802FFD704100FE33B9 /* PBXContainerItemProxy */;
 		};
 		308EF9942FFD704E00FE33B9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 308EF98B2FFD704E00FE33B9 /* QuickLookAPKThumbnail */;
+			target = 308EF98B2FFD704E00FE33B9 /* APK Thumbnail */;
 			targetProxy = 308EF9932FFD704E00FE33B9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -504,9 +448,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = XNAZEWFH6C;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -517,7 +462,7 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QuickLookAPKPreview/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = QuickLookAPKPreview;
+				INFOPLIST_KEY_CFBundleDisplayName = "APK Preview";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -527,13 +472,14 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hezicohen.qlapk.QuickLookAPK.QuickLookAPKPreview;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hezicohen.qlapk.QuickLookAPKPreview;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "QuickLookAPKPreview/HZAndroidPackage-Bridge.h";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -544,16 +490,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = XNAZEWFH6C;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QuickLookAPKPreview/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = QuickLookAPKPreview;
+				INFOPLIST_KEY_CFBundleDisplayName = "APK Preview";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -563,12 +510,13 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hezicohen.qlapk.QuickLookAPK.QuickLookAPKPreview;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hezicohen.qlapk.QuickLookAPKPreview;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "QuickLookAPKPreview/HZAndroidPackage-Bridge.h";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -579,9 +527,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = XNAZEWFH6C;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -592,7 +541,7 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QuickLookAPKThumbnail/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = QuickLookAPKThumbnail;
+				INFOPLIST_KEY_CFBundleDisplayName = "APK Thumbnail";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -602,13 +551,14 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hezicohen.qlapk.QuickLookAPK.QuickLookAPKThumbnail;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hezicohen.qlapk.QuickLookAPKThumbnail;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "QuickLookAPKThumbnail/HZAndroidPackage-Bridge.h";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -619,16 +569,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = XNAZEWFH6C;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QuickLookAPKThumbnail/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = QuickLookAPKThumbnail;
+				INFOPLIST_KEY_CFBundleDisplayName = "APK Thumbnail";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -638,12 +589,13 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hezicohen.qlapk.QuickLookAPK.QuickLookAPKThumbnail;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hezicohen.qlapk.QuickLookAPKThumbnail;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "QuickLookAPKThumbnail/HZAndroidPackage-Bridge.h";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -706,7 +658,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.4;
 				MARKETING_VERSION = 2.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -771,7 +723,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.4;
 				MARKETING_VERSION = 2.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -805,7 +757,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		308EF9842FFD704100FE33B9 /* Build configuration list for PBXNativeTarget "QuickLookAPKPreview" */ = {
+		308EF9842FFD704100FE33B9 /* Build configuration list for PBXNativeTarget "APK Preview" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				308EF9852FFD704100FE33B9 /* Debug */,
@@ -814,7 +766,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		308EF9972FFD704E00FE33B9 /* Build configuration list for PBXNativeTarget "QuickLookAPKThumbnail" */ = {
+		308EF9972FFD704E00FE33B9 /* Build configuration list for PBXNativeTarget "APK Thumbnail" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				308EF9982FFD704E00FE33B9 /* Debug */,

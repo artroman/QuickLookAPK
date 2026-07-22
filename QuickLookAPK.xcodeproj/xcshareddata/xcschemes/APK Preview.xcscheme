@@ -17,8 +17,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "308EF9742FFD704100FE33B9"
-               BuildableName = "QuickLookAPKPreview.appex"
-               BlueprintName = "QuickLookAPKPreview"
+               BuildableName = "APK Preview.appex"
+               BlueprintName = "APK Preview"
                ReferencedContainer = "container:QuickLookAPK.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

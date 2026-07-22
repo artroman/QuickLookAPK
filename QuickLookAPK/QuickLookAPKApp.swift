@@ -11,7 +11,7 @@ import AppKit
 @main
 struct QuickLookAPKApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
-
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
