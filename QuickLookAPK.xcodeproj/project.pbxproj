@@ -69,27 +69,36 @@
 			);
 			target = 308EF98B2FFD704E00FE33B9 /* APK Thumbnail */;
 		};
-		308EF99C2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "QuickLookAPK" target */ = {
+		3097F8683034D40300A9986E /* Exceptions for "AndroidShared" folder in "QuickLookAPK" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				aapt,
-				HZAndroidPackage.m,
+				AndroidBinaryXML.swift,
+				AndroidPackage.swift,
+				AndroidResourceTable.swift,
+				VectorDrawableRenderer.swift,
+				ZipArchive.swift,
 			);
 			target = 308EF9652FFD703100FE33B9 /* QuickLookAPK */;
 		};
-		308EF99D2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "APK Preview" target */ = {
+		3097F8693034D40300A9986E /* Exceptions for "AndroidShared" folder in "APK Preview" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				aapt,
-				HZAndroidPackage.m,
+				AndroidBinaryXML.swift,
+				AndroidPackage.swift,
+				AndroidResourceTable.swift,
+				VectorDrawableRenderer.swift,
+				ZipArchive.swift,
 			);
 			target = 308EF9742FFD704100FE33B9 /* APK Preview */;
 		};
-		308EF99E2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "APK Thumbnail" target */ = {
+		3097F86B3034D43500A9986E /* Exceptions for "AndroidShared" folder in "APK Thumbnail" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				aapt,
-				HZAndroidPackage.m,
+				AndroidBinaryXML.swift,
+				AndroidPackage.swift,
+				AndroidResourceTable.swift,
+				VectorDrawableRenderer.swift,
+				ZipArchive.swift,
 			);
 			target = 308EF98B2FFD704E00FE33B9 /* APK Thumbnail */;
 		};
@@ -98,11 +107,6 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		308EF9672FFD703100FE33B9 /* QuickLookAPK */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				308EF99C2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "QuickLookAPK" target */,
-				308EF99D2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "APK Preview" target */,
-				308EF99E2FFD74CE00FE33B9 /* Exceptions for "QuickLookAPK" folder in "APK Thumbnail" target */,
-			);
 			path = QuickLookAPK;
 			sourceTree = "<group>";
 		};
@@ -120,6 +124,16 @@
 				308EF9962FFD704E00FE33B9 /* Exceptions for "QuickLookAPKThumbnail" folder in "APK Thumbnail" target */,
 			);
 			path = QuickLookAPKThumbnail;
+			sourceTree = "<group>";
+		};
+		3097F8623034D40200A9986E /* AndroidShared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				3097F8683034D40300A9986E /* Exceptions for "AndroidShared" folder in "QuickLookAPK" target */,
+				3097F8693034D40300A9986E /* Exceptions for "AndroidShared" folder in "APK Preview" target */,
+				3097F86B3034D43500A9986E /* Exceptions for "AndroidShared" folder in "APK Thumbnail" target */,
+			);
+			path = AndroidShared;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -164,6 +178,7 @@
 		9233ABA0763F77C8ED0A431F = {
 			isa = PBXGroup;
 			children = (
+				3097F8623034D40200A9986E /* AndroidShared */,
 				308EF9672FFD703100FE33B9 /* QuickLookAPK */,
 				308EF9772FFD704100FE33B9 /* QuickLookAPKPreview */,
 				308EF98F2FFD704E00FE33B9 /* QuickLookAPKThumbnail */,
@@ -202,6 +217,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				308EF9672FFD703100FE33B9 /* QuickLookAPK */,
+				3097F8623034D40200A9986E /* AndroidShared */,
 			);
 			name = QuickLookAPK;
 			packageProductDependencies = (
@@ -484,6 +500,7 @@
 				AUTOMATION_APPLE_EVENTS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_APP_SANDBOX = YES;
@@ -531,7 +548,6 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "QuickLookAPKPreview/HZAndroidPackage-Bridge.h";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -544,6 +560,7 @@
 				AUTOMATION_APPLE_EVENTS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_APP_SANDBOX = YES;
@@ -586,7 +603,6 @@
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "QuickLookAPKPreview/HZAndroidPackage-Bridge.h";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -641,7 +657,6 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "QuickLookAPKThumbnail/HZAndroidPackage-Bridge.h";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -691,7 +706,6 @@
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "QuickLookAPKThumbnail/HZAndroidPackage-Bridge.h";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -755,7 +769,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				MACOSX_DEPLOYMENT_TARGET = 12.4;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 2.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -821,7 +835,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				MACOSX_DEPLOYMENT_TARGET = 12.4;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 2.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

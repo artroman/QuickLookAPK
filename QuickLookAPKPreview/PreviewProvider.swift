@@ -29,7 +29,7 @@ class PreviewProvider: QLPreviewProvider, QLPreviewingController {
      */
     
     func providePreview(for request: QLFilePreviewRequest) async throws -> QLPreviewReply {
-        guard let apk = HZAndroidPackage(path: request.fileURL.path) else {
+        guard let apk = AndroidPackage(path: request.fileURL.path) else {
             throw CocoaError(.fileReadUnknown)
         }
         

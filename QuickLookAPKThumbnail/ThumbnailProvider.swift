@@ -11,9 +11,9 @@ import AppKit
 class ThumbnailProvider: QLThumbnailProvider {
     
     override func provideThumbnail(for request: QLFileThumbnailRequest, _ handler: @escaping (QLThumbnailReply?, Error?) -> Void) {
-        guard let apk = HZAndroidPackage(path: request.fileURL.path),
-              let iconData = apk.iconData, !iconData.isEmpty,
-              let icon = NSImage(data: iconData) else {
+        guard let apk = AndroidPackage(path: request.fileURL.path),
+              !apk.iconData.isEmpty,
+              let icon = NSImage(data: apk.iconData) else {
             handler(nil, QLThumbnailError(.generationFailed))
             return
         }
