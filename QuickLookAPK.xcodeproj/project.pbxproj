@@ -178,10 +178,10 @@
 		9233ABA0763F77C8ED0A431F = {
 			isa = PBXGroup;
 			children = (
-				3097F8623034D40200A9986E /* AndroidShared */,
 				308EF9672FFD703100FE33B9 /* QuickLookAPK */,
 				308EF9772FFD704100FE33B9 /* QuickLookAPKPreview */,
 				308EF98F2FFD704E00FE33B9 /* QuickLookAPKThumbnail */,
+				3097F8623034D40200A9986E /* AndroidShared */,
 				4FDD1C733C6233A32C9C0C79 /* Frameworks */,
 				A61FA03E730C4FA3D8DAF981 /* Products */,
 			);

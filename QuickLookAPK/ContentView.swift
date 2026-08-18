@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  QuickLookAPK
 //
-//  Created by Roman on 7. 7. 2026..
+//  Created by Roman on 7. 7. 2026.
 //
 
 import SwiftUI

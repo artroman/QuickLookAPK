@@ -2,7 +2,7 @@
 //  PreviewProvider.swift
 //  QuickLookAPKPreview
 //
-//  Created by Roman on 7. 7. 2026..
+//  Created by Roman on 7. 7. 2026.
 //
 
 import Quartz
@@ -13,17 +13,17 @@ class PreviewProvider: QLPreviewProvider, QLPreviewingController {
      Use a QLPreviewProvider to provide data-based previews.
      
      To set up your extension as a data-based preview extension:
-
+     
      - Modify the extension's Info.plist by setting
-       <key>QLIsDataBasedPreview</key>
-       <true/>
+     <key>QLIsDataBasedPreview</key>
+     <true/>
      
      - Add the supported content types to QLSupportedContentTypes array in the extension's Info.plist.
-
+     
      - Change the NSExtensionPrincipalClass to this class.
-       e.g.
-       <key>NSExtensionPrincipalClass</key>
-       <string>$(PRODUCT_MODULE_NAME).PreviewProvider</string>
+     e.g.
+     <key>NSExtensionPrincipalClass</key>
+     <string>$(PRODUCT_MODULE_NAME).PreviewProvider</string>
      
      - Implement providePreview(for:)
      */
