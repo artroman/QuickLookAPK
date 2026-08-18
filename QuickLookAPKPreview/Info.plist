@@ -8,6 +8,10 @@
 		<dict>
 			<key>QLIsDataBasedPreview</key>
 			<true/>
+			<key>QLPreviewHeight</key>
+			<real>600</real>
+			<key>QLPreviewWidth</key>
+			<real>800</real>
 			<key>QLSupportedContentTypes</key>
 			<array>
 				<string>com.android.package-archive</string>
@@ -15,10 +19,6 @@
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>
-			<key>QLPreviewHeight</key>
-			<real>600</real>
-			<key>QLPreviewWidth</key>
-			<real>800</real>
 		</dict>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.quicklook.preview</string>

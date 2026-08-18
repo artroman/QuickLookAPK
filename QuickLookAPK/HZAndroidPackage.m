@@ -384,7 +384,11 @@ NSData *dataFromZipPath(NSString *zipFile, NSString *pathInZip)
     NSFileHandle *file;
     file = [pipe fileHandleForReading];
     
-    [task launch];
+    NSError *launchError = nil;
+    if (![task launchAndReturnError:&launchError]) {
+        NSLog(@"QuickLookAPK: failed to launch /usr/bin/unzip: %@", launchError);
+        return [NSData data];
+    }
     
     NSData *data;
     data = [file readDataToEndOfFile];
@@ -481,7 +485,12 @@ NSString *androidPackageHTMLPreview(HZAndroidPackage *package)
     
     NSPipe *readPipe = [NSPipe pipe];
     [task setStandardOutput:readPipe];
-    [task launch];
+    
+    NSError *launchError = nil;
+    if (![task launchAndReturnError:&launchError]) {
+        NSLog(@"QuickLookAPK: failed to launch aapt at %@: %@", aaptPath, launchError);
+        return;
+    }
     
     NSData *apkData = [[readPipe fileHandleForReading] readDataToEndOfFile];
     NSString *apkString = [[NSString alloc] initWithData:apkData encoding:NSUTF8StringEncoding];
@@ -532,7 +541,7 @@ NSString *androidPackageHTMLPreview(HZAndroidPackage *package)
     NSRange range = [result rangeAtIndex:1];
     self.iconPath = [apkString substringWithRange:range];
     
-
+    
     if (![self.iconPath containsString:@".xml"]) {
         // Just unpack icon
         //application: label='App' icon='res/9w.png'
@@ -574,9 +583,9 @@ NSString *androidPackageHTMLPreview(HZAndroidPackage *package)
     if (self.iconData.length == 0 && [self.iconPath containsString:@".xml"]){
         /* APK is obfuscated, get resource ID of the icon by its path:
          $ aapt dump --values resources test.apk
-                 resource 0x7f0f0003 com.package:mipmap/ic_launcher: t=0x03 d=0x00000914 (s=0x0008 r=0x00)
-                   (string8) "res/BW.xml"
-        */
+         resource 0x7f0f0003 com.package:mipmap/ic_launcher: t=0x03 d=0x00000914 (s=0x0008 r=0x00)
+         (string8) "res/BW.xml"
+         */
         NSString *iconResGrepResult = grepResources(self, self.iconPath, @"-B1");
         
         NSError *error = nil;
@@ -590,12 +599,12 @@ NSString *androidPackageHTMLPreview(HZAndroidPackage *package)
         }
         
         /* Then search for real icon paths by its resource ID, use the last bitmap icon:
-                 resource 0x7f0f0003 com.package:mipmap/ic_launcher: t=0x03 d=0x000005b7 (s=0x0008 r=0x00)
-                   (string8) "res/RJ.png"
-                 resource 0x7f0f0003 com.package:mipmap/ic_launcher: t=0x03 d=0x00000698 (s=0x0008 r=0x00)
-                   (string8) "res/o-.png"
-                 resource 0x7f0f0003 com.package:mipmap/ic_launcher: t=0x03 d=0x00000914 (s=0x0008 r=0x00)
-                   (string8) "res/BW.xml"
+         resource 0x7f0f0003 com.package:mipmap/ic_launcher: t=0x03 d=0x000005b7 (s=0x0008 r=0x00)
+         (string8) "res/RJ.png"
+         resource 0x7f0f0003 com.package:mipmap/ic_launcher: t=0x03 d=0x00000698 (s=0x0008 r=0x00)
+         (string8) "res/o-.png"
+         resource 0x7f0f0003 com.package:mipmap/ic_launcher: t=0x03 d=0x00000914 (s=0x0008 r=0x00)
+         (string8) "res/BW.xml"
          */
         NSString *iconPathGrepResult = grepResources(self, self.iconResourceId, @"-A1");
         
@@ -658,8 +667,11 @@ NSString *grepResources(HZAndroidPackage *package, NSString *grepWhat, NSString 
     grepTask.standardInput = dumpAndGrep;
     grepTask.standardOutput = outputPipe;
     
-    [dumpTask launch];
-    [grepTask launch];
+    NSError *launchError = nil;
+    if (![dumpTask launchAndReturnError:&launchError] || ![grepTask launchAndReturnError:&launchError]) {
+        NSLog(@"QuickLookAPK: failed to launch aapt/grep pipeline: %@", launchError);
+        return @"";
+    }
     
     NSData *dumpData = [[outputPipe fileHandleForReading] readDataToEndOfFile];
     NSString *dumpString = [[NSString alloc] initWithData:dumpData encoding:NSUTF8StringEncoding];
