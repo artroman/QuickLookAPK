@@ -9,6 +9,7 @@
 			<key>QLSupportedContentTypes</key>
 			<array>
 				<string>com.android.package-archive</string>
+				<string>public.android-app-package</string>
 				<string>public.archive.apk</string>
 			</array>
 			<key>QLThumbnailMinimumDimension</key>

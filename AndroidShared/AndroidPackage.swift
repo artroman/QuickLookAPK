@@ -427,47 +427,107 @@ func androidPackageHTMLPreview(_ package: AndroidPackage) -> String {
     var html = ""
     html += "<!doctype html>"
     html += "<html>"
-    html += "<head><meta charset='utf-8'><style>body {background: #fff; color: #000; font-family: system-ui, sans-serif;} @media (prefers-color-scheme: dark) { body {background: #323232; color: #fff;} }</style></head>"
-    html += "<body><h1>"
-    
+    html += "<head><meta charset='utf-8'><style>"
+    html += """
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        padding: 28px 32px;
+        background: #fff;
+        color: #1d1d1f;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+        font-size: 13px;
+    }
+    @media (prefers-color-scheme: dark) {
+        body { background: #262626; color: #f5f5f7; }
+        .permission-item { border-color: rgba(255,255,255,0.12) !important; }
+        .secondary { color: rgba(255,255,255,0.55) !important; }
+    }
+    .header { display: flex; align-items: flex-start; gap: 22px; }
+    .icon-wrap { flex-shrink: 0; padding: 8px; }
+    .icon-wrap img { display: block; width: 112px; height: 112px; border-radius: 20px; }
+    .title { font-size: 21px; font-weight: 600; margin: 0 0 10px 0; line-height: 1.25; }
+    .info-line { line-height: 1.7; }
+    .info-line-500 { line-height: 1.7; font-weight: 500; }
+    .secondary { color: rgba(0,0,0,0.55); }
+    .section-title { font-size: 13px; font-weight: 600; margin: 28px 0 8px 0; }
+    .permission-list { list-style: none; margin: 0; padding: 0; }
+    .permission-item { padding: 9px 0; border-bottom: 1px solid rgba(0,0,0,0.08); }
+    .permission-item:last-child { border-bottom: none; }
+    """
+    html += "</style></head>"
+    html += "<body>"
+    html += "<div class='header'>"
+
     if !package.iconData.isEmpty {
         let iconBase64 = package.iconData.base64EncodedString()
-        html += "<img style='width: 100px; height: 100px; vertical-align: middle;' title='\(package.label)' src='data:\(package.iconType);base64,\(iconBase64)'>"
+        html += "<div class='icon-wrap'><img title='\(htmlEscape(package.label))' src='data:\(package.iconType);base64,\(iconBase64)'></div>"
     }
+
+    html += "<div>"
+    html += "<div class='title'>\(htmlEscape(package.label))</div>"
+    html += "<div class='info-line'>Version \(htmlEscape(package.versionName)) (\(package.versionCode))</div>"
+    html += "<div class='info-line secondary'>\(htmlEscape(package.name))</div>"
     
-    html += "\(package.label)</h1>"
-    html += "<h3>Package name: \(package.name)</h3>"
-    html += "<h3>Version: \(package.versionName) (\(package.versionCode))</h3>"
-    
-    if package.targetSdkVersion > 0 {
-        html += "<h3>Target SDK: \(package.targetSdkVersion) (\(getAndroidPlatformNameForApiLevel(package.targetSdkVersion)))</h3>"
-    }
     if package.minSdkVersion > 0 {
-        html += "<h3>Min SDK: \(package.minSdkVersion) (\(getAndroidPlatformNameForApiLevel(package.minSdkVersion)))</h3>"
+        html += "<div class='info-line secondary'>Requires \(getAndroidPlatformNameForApiLevel(package.minSdkVersion)) (API \(package.minSdkVersion))</div>"
+    }
+    if package.targetSdkVersion > 0 {
+        html += "<div class='info-line secondary'>Targets \(getAndroidPlatformNameForApiLevel(package.targetSdkVersion)) (API \(package.targetSdkVersion))</div>"
     }
     if package.maxSdkVersion > 0 {
-        html += "<h3>Max SDK: \(package.maxSdkVersion) (\(getAndroidPlatformNameForApiLevel(package.maxSdkVersion)))</h3>"
+        html += "<div class='info-line secondary'>Max \(getAndroidPlatformNameForApiLevel(package.maxSdkVersion)) (API \(package.maxSdkVersion))</div>"
     }
     if let nativeLibraries = package.nativeLibraries {
-        html += "<h3>Native libraries: \(nativeLibraries)</h3>"
+        html += "<div class='info-line secondary'>Native libs: \(htmlEscape(nativeLibraries))</div>"
     }
-    
+    if let modificationDate = package.modificationDate {
+        html += "<div class='info-line secondary'>Modified: \(htmlEscape(fileDateFormatter.string(from: modificationDate)))</div>"
+    }
+    if package.fileSize > 0 {
+        html += "<div class='info-line secondary'>\(fileSizeFormatter.string(fromByteCount: package.fileSize))</div>"
+    }
+    html += "</div>"
+    html += "</div>" // .header
+
     if !package.permissions.isEmpty {
-        html += "<h3>Permissions:</h3><ul>"
-        for permission in package.permissions.sorted(by: { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }) {
+        html += "<div class='section-title'>Permissions:</div>"
+        html += "<ul class='permission-list'>"
+        for permission in package.permissions//.sorted(by: { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending })
+        {
             let key = permission.replacingOccurrences(of: "android.permission.", with: "")
-            html += "<li>\(permission)"
+            html += "<li class='permission-item'><div class='info-line-500'>\(htmlEscape(permission))</div>"
             if let description = permissionsMap[key] {
-                html += ":<br>\(description)"
+                html += "<div class='info-line secondary'>\(htmlEscape(description))</div>"
             }
-            html += "</li><br>"
+            html += "</li>"
         }
         html += "</ul>"
     }
-    
+
     html += "</body></html>"
     return html
 }
+
+private func htmlEscape(_ s: String) -> String {
+    s.replacingOccurrences(of: "&", with: "&amp;")
+        .replacingOccurrences(of: "<", with: "&lt;")
+        .replacingOccurrences(of: ">", with: "&gt;")
+}
+
+private let fileSizeFormatter: ByteCountFormatter = {
+    let formatter = ByteCountFormatter()
+    formatter.countStyle = .file
+    return formatter
+}()
+
+private let fileDateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .long
+    formatter.timeStyle = .short
+    return formatter
+}()
 
 /// A parsed Android APK, read directly from its ZIP contents without shelling
 /// out to any external tool.
@@ -484,6 +544,9 @@ final class AndroidPackage {
     private(set) var iconType = "image/png"
     private(set) var permissions: [String] = []
     private(set) var nativeLibraries: String?
+    private(set) var fileSize: Int64 = 0
+    private(set) var modificationDate: Date?
+    private(set) var creationDate: Date?
     
     // Well-known android: manifest attribute resource IDs, verified against
     // AOSP frameworks/base/core/res/res/values/public-final.xml.
@@ -549,6 +612,12 @@ final class AndroidPackage {
         if label.isEmpty { label = name }
         
         nativeLibraries = Self.nativeLibraryABIs(entryNames: archive.entryNames)
+
+        if let attributes = try? FileManager.default.attributesOfItem(atPath: path) {
+            fileSize = (attributes[.size] as? NSNumber)?.int64Value ?? 0
+            modificationDate = attributes[.modificationDate] as? Date
+            creationDate = attributes[.creationDate] as? Date
+        }
     }
     
     private static func resolveString(_ value: AXMLValue, table: AndroidResourceTable?) -> String? {
