@@ -28,19 +28,23 @@ final class AXMLElement {
     let attributes: [AXMLAttribute]
     var children: [AXMLElement] = []
     
+    /// Creates an element with no children; the parser appends them as it walks the tree.
     init(name: String, attributes: [AXMLAttribute]) {
         self.name = name
         self.attributes = attributes
     }
     
+    /// The attribute with the given `android:` resource ID, if any.
     func attribute(id: UInt32) -> AXMLAttribute? {
         attributes.first { $0.resourceID == id }
     }
     
+    /// The attribute with the given name (without namespace prefix), if any.
     func attribute(named name: String) -> AXMLAttribute? {
         attributes.first { $0.name == name }
     }
     
+    /// The first direct child element with the given tag name.
     func firstChild(named name: String) -> AXMLElement? {
         children.first { $0.name == name }
     }
@@ -72,21 +76,25 @@ final class AXMLParser {
     private var stringPool: [String] = []
     private var resourceMap: [UInt32] = []
     
+    /// Use `parse(data:)`.
     private init(bytes: [UInt8]) {
         self.bytes = bytes
     }
     
+    /// Parses compiled XML bytes; nil if the data is too short or malformed.
     static func parse(data: Data) -> AXMLDocument? {
         AXMLParser(bytes: [UInt8](data)).parseDocument()
     }
     
     // MARK: - Byte-level reading
     
+    /// Little-endian UInt16 at `offset`, or 0 when out of bounds.
     private func u16(_ offset: Int) -> UInt16 {
         guard offset >= 0, offset + 2 <= bytes.count else { return 0 }
         return UInt16(bytes[offset]) | (UInt16(bytes[offset + 1]) << 8)
     }
     
+    /// Little-endian UInt32 at `offset`, or 0 when out of bounds.
     private func u32(_ offset: Int) -> UInt32 {
         guard offset >= 0, offset + 4 <= bytes.count else { return 0 }
         return UInt32(bytes[offset])
@@ -95,10 +103,12 @@ final class AXMLParser {
         | (UInt32(bytes[offset + 3]) << 24)
     }
     
+    /// Little-endian Int32 at `offset`, or 0 when out of bounds.
     private func i32(_ offset: Int) -> Int32 {
         Int32(bitPattern: u32(offset))
     }
     
+    /// The string-pool entry at `index`; nil for -1 (no string) or out of range.
     private func stringAt(_ index: Int32) -> String? {
         guard index >= 0, Int(index) < stringPool.count else { return nil }
         return stringPool[Int(index)]
@@ -106,6 +116,7 @@ final class AXMLParser {
     
     // MARK: - String pool
     
+    /// Reads a string-pool UTF-8 length (1 or 2 bytes) and advances `pos` past it.
     private func decodeUTF8Length(_ pos: inout Int) -> Int {
         guard pos < bytes.count else { return 0 }
         let first = Int(bytes[pos]); pos += 1
@@ -117,6 +128,7 @@ final class AXMLParser {
         return first
     }
     
+    /// Reads a string-pool UTF-16 length (1 or 2 units) and advances `pos` past it.
     private func decodeUTF16Length(_ pos: inout Int) -> Int {
         let first = Int(u16(pos)); pos += 2
         if first & 0x8000 != 0 {
@@ -126,6 +138,7 @@ final class AXMLParser {
         return first
     }
     
+    /// Decodes every string of the `ResStringPool` chunk at `chunkStart` (UTF-8 or UTF-16).
     private func parseStringPool(at chunkStart: Int) -> [String] {
         let headerSize = Int(u16(chunkStart + 2))
         let stringCount = Int(u32(chunkStart + 8))
@@ -171,6 +184,7 @@ final class AXMLParser {
     
     // MARK: - Values
     
+    /// Converts a typed `Res_value` into an `AXMLValue`, resolving string indices.
     private func decodeValue(dataType: UInt8, data: UInt32) -> AXMLValue {
         switch ValueType(rawValue: dataType) {
         case .string:
@@ -188,6 +202,7 @@ final class AXMLParser {
     
     // MARK: - Document walk
     
+    /// Walks the chunks, building the element tree from start/end element chunks.
     private func parseDocument() -> AXMLDocument? {
         guard bytes.count >= 8 else { return nil }
         let topHeaderSize = Int(u16(2))

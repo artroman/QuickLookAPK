@@ -34,10 +34,21 @@ final class AndroidResourceTable {
         static let tableType: UInt16 = 0x0201
     }
     
+    private enum TypeFlag {
+        static let sparse: UInt8 = 0x01
+        static let offset16: UInt8 = 0x02
+    }
+    
+    private enum EntryFlag {
+        static let complex: UInt16 = 0x0001
+        static let compact: UInt16 = 0x0008
+    }
+    
     private let bytes: [UInt8]
     private var valueStringPool: [String] = []
     private var packages: [Package] = []
     
+    /// Parses a resources.arsc file; nil if it isn't a resource table.
     init?(data: Data) {
         self.bytes = [UInt8](data)
         guard parse() else { return nil }
@@ -45,11 +56,13 @@ final class AndroidResourceTable {
     
     // MARK: - Byte-level reading (mirrors AXMLParser's helpers)
     
+    /// Little-endian UInt16 at `offset`, or 0 when out of bounds.
     private func u16(_ offset: Int) -> UInt16 {
         guard offset >= 0, offset + 2 <= bytes.count else { return 0 }
         return UInt16(bytes[offset]) | (UInt16(bytes[offset + 1]) << 8)
     }
     
+    /// Little-endian UInt32 at `offset`, or 0 when out of bounds.
     private func u32(_ offset: Int) -> UInt32 {
         guard offset >= 0, offset + 4 <= bytes.count else { return 0 }
         return UInt32(bytes[offset])
@@ -58,6 +71,7 @@ final class AndroidResourceTable {
         | (UInt32(bytes[offset + 3]) << 24)
     }
     
+    /// Reads a string-pool UTF-8 length (1 or 2 bytes) and advances `pos` past it.
     private func decodeUTF8Length(_ pos: inout Int) -> Int {
         guard pos < bytes.count else { return 0 }
         let first = Int(bytes[pos]); pos += 1
@@ -69,6 +83,7 @@ final class AndroidResourceTable {
         return first
     }
     
+    /// Reads a string-pool UTF-16 length (1 or 2 units) and advances `pos` past it.
     private func decodeUTF16Length(_ pos: inout Int) -> Int {
         let first = Int(u16(pos)); pos += 2
         if first & 0x8000 != 0 {
@@ -78,6 +93,7 @@ final class AndroidResourceTable {
         return first
     }
     
+    /// Decodes every string of the `ResStringPool` chunk at `chunkStart` (UTF-8 or UTF-16).
     private func parseStringPool(at chunkStart: Int) -> [String] {
         let headerSize = Int(u16(chunkStart + 2))
         let stringCount = Int(u32(chunkStart + 8))
@@ -122,6 +138,7 @@ final class AndroidResourceTable {
     
     // MARK: - Parsing
     
+    /// Reads the global value string pool and each package chunk.
     private func parse() -> Bool {
         guard bytes.count >= 12, u16(0) == ChunkType.table else { return false }
         let topHeaderSize = Int(u16(2))
@@ -149,6 +166,7 @@ final class AndroidResourceTable {
         return true
     }
     
+    /// Reads a package's type/key string pools and indexes its type chunks (one per config).
     private func parsePackage(chunkStart: Int, chunkSize: Int) -> Package? {
         guard chunkStart + 288 <= bytes.count else { return nil }
         let id = UInt8(u32(chunkStart + 8) & 0xFF)
@@ -200,47 +218,88 @@ final class AndroidResourceTable {
     /// Resolves a resource ID (as found in a `TYPE_REFERENCE` value) to its value,
     /// preferring the config whose density is closest to `preferredDensity`.
     func resolve(_ resID: UInt32, preferredDensity: Int = 480) -> AXMLValue? {
+        resolveAll(resID, preferredDensity: preferredDensity).first
+    }
+    
+    /// Resolves a resource ID to its value in every config that defines it, ordered
+    /// by how close each config's density is to `preferredDensity` (ties keep table order).
+    func resolveAll(_ resID: UInt32, preferredDensity: Int = 480) -> [AXMLValue] {
         let packageID = UInt8((resID >> 24) & 0xFF)
         let typeIndex = Int((resID >> 16) & 0xFF) - 1
         let entryIndex = Int(resID & 0xFFFF)
         guard let package = packages.first(where: { $0.id == packageID }),
-              let chunks = package.types[typeIndex], !chunks.isEmpty else { return nil }
+              let chunks = package.types[typeIndex], !chunks.isEmpty else { return [] }
         
-        let ordered = chunks.sorted {
-            abs($0.density - preferredDensity) < abs($1.density - preferredDensity)
+        let ordered = chunks.enumerated().sorted {
+            let lhs = abs($0.element.density - preferredDensity)
+            let rhs = abs($1.element.density - preferredDensity)
+            return lhs != rhs ? lhs < rhs : $0.offset < $1.offset
         }
-        for chunk in ordered {
-            if let value = readEntry(chunk: chunk, entryIndex: entryIndex) {
-                return value
+        return ordered.compactMap { readEntry(chunk: $0.element, entryIndex: entryIndex) }
+    }
+    
+    /// Convenience for the common case of resolving a reference straight to a string
+    /// (e.g. an in-APK resource path, or a literal label string).
+    /// Follows alias chains such as `@string/app_name` -> `@string/app_name_release`.
+    func resolveToString(_ resID: UInt32, preferredDensity: Int = 480) -> String? {
+        var value = resolve(resID, preferredDensity: preferredDensity)
+        for _ in 0..<8 {
+            switch value {
+            case .string(let s)?:
+                return s
+            case .reference(let next)?:
+                value = resolve(next, preferredDensity: preferredDensity)
+            default:
+                return nil
             }
         }
         return nil
     }
     
-    /// Convenience for the common case of resolving a reference straight to a string
-    /// (e.g. an in-APK resource path, or a literal label string).
-    func resolveToString(_ resID: UInt32, preferredDensity: Int = 480) -> String? {
-        guard case .string(let s)? = resolve(resID, preferredDensity: preferredDensity) else { return nil }
-        return s
-    }
-    
+    /// The simple value of an entry in one config (classic or compact encoding); nil if the
+    /// config doesn't define it or it's a complex (map/style) entry.
     private func readEntry(chunk: TypeChunk, entryIndex: Int) -> AXMLValue? {
-        guard entryIndex < chunk.entryCount, chunk.flags & 0x01 == 0 else { return nil } // FLAG_SPARSE unsupported
-        let offsetTableStart = chunk.chunkStart + chunk.headerSize
-        let entryOffsetRaw = u32(offsetTableStart + entryIndex * 4)
-        guard entryOffsetRaw != 0xFFFFFFFF else { return nil } // no entry for this config
-        let entryStart = chunk.chunkStart + chunk.entriesStart + Int(entryOffsetRaw)
+        guard let entryOffset = entryOffset(chunk: chunk, entryIndex: entryIndex) else { return nil }
+        let entryStart = chunk.chunkStart + chunk.entriesStart + entryOffset
         guard entryStart + 8 <= bytes.count else { return nil }
-        let entrySize = Int(u16(entryStart))
         let entryFlags = u16(entryStart + 2)
-        guard entryFlags & 0x0001 == 0 else { return nil } // complex (map/style) entries unsupported
-        let valueStart = entryStart + entrySize
+        if entryFlags & EntryFlag.compact != 0 {
+            // Compact entry: { u16 key, u16 flags (data type in the high byte), u32 data }.
+            return decodeGlobalValue(dataType: UInt8(entryFlags >> 8), data: u32(entryStart + 4))
+        }
+        guard entryFlags & EntryFlag.complex == 0 else { return nil } // map/style entries unsupported
+        let valueStart = entryStart + Int(u16(entryStart))
         guard valueStart + 8 <= bytes.count else { return nil }
         let dataType = bytes[valueStart + 3]
         let dataValue = u32(valueStart + 4)
         return decodeGlobalValue(dataType: dataType, data: dataValue)
     }
     
+    /// Looks up an entry's offset (relative to the chunk's entries start) in the
+    /// chunk's offset table, or nil if this config doesn't define the entry.
+    private func entryOffset(chunk: TypeChunk, entryIndex: Int) -> Int? {
+        let tableStart = chunk.chunkStart + chunk.headerSize
+        if chunk.flags & TypeFlag.sparse != 0 {
+            // Sorted { u16 entry index, u16 offset / 4 } pairs; binary search them.
+            var low = 0, high = chunk.entryCount - 1
+            while low <= high {
+                let mid = (low + high) / 2
+                let index = Int(u16(tableStart + mid * 4))
+                if index == entryIndex { return Int(u16(tableStart + mid * 4 + 2)) * 4 }
+                if index < entryIndex { low = mid + 1 } else { high = mid - 1 }
+            }
+            return nil
+        }
+        guard entryIndex < chunk.entryCount else { return nil }
+        if chunk.flags & TypeFlag.offset16 != 0 {
+            let raw = u16(tableStart + entryIndex * 2)
+            return raw == 0xFFFF ? nil : Int(raw) * 4
+        }
+        let raw = u32(tableStart + entryIndex * 4)
+        return raw == 0xFFFF_FFFF ? nil : Int(raw)
+    }
+    
+    /// Converts a typed `Res_value`, resolving string indices against the global pool.
     private func decodeGlobalValue(dataType: UInt8, data: UInt32) -> AXMLValue {
         switch dataType {
         case 0x03:

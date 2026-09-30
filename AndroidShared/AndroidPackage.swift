@@ -4,13 +4,12 @@
 //
 //  Swift replacement for the old Objective-C HZAndroidPackage + bundled aapt
 //  subprocess. Parses an APK's AndroidManifest.xml and resources.arsc natively
-//  (see ZipArchive.swift / AndroidBinaryXML.swift / AndroidResourceTable.swift /
-//  VectorDrawableRenderer.swift) instead of shelling out to aapt, which App
-//  Sandbox does not allow a Quick Look extension to execute.
+//  instead of shelling out to aapt, which App Sandbox does not allow a Quick Look extension to execute.
 //
 
 import Foundation
 
+/// Human-readable Android version name for an API level, e.g. "Android 14 - Upside Down Cake".
 func getAndroidPlatformNameForApiLevel(_ apiLevel: Int) -> String {
     switch apiLevel {
     case 1: return "Android 1.0"
@@ -56,7 +55,7 @@ func getAndroidPlatformNameForApiLevel(_ apiLevel: Int) -> String {
     }
 }
 
-// Got it from: http://developer.android.com/reference/android/Manifest.permission.html
+// List of permissions from http://developer.android.com/reference/android/Manifest.permission.html
 private let permissionsMap: [String: String] = [
     "ACCEPT_HANDOVER": "Allows a calling app to continue a call which was started in another app.",
     "ACCESS_BACKGROUND_LOCATION": "Allows an app to access location in the background.",
@@ -423,6 +422,7 @@ private let permissionsMap: [String: String] = [
     "WRITE_VOICEMAIL": "Allows an application to modify and remove existing voicemails in the system.",
 ]
 
+/// Builds the Quick Look preview page: icon, name, version, SDK levels, file info and permissions.
 func androidPackageHTMLPreview(_ package: AndroidPackage) -> String {
     var html = ""
     html += "<!doctype html>"
@@ -523,10 +523,13 @@ func androidPackageHTMLPreview(_ package: AndroidPackage) -> String {
     return html
 }
 
+/// Escapes text for use in HTML content and quoted attribute values.
 private func htmlEscape(_ s: String) -> String {
     s.replacingOccurrences(of: "&", with: "&amp;")
         .replacingOccurrences(of: "<", with: "&lt;")
         .replacingOccurrences(of: ">", with: "&gt;")
+        .replacingOccurrences(of: "\"", with: "&quot;")
+        .replacingOccurrences(of: "'", with: "&#39;")
 }
 
 private let fileSizeFormatter: ByteCountFormatter = {
@@ -542,8 +545,7 @@ private let fileDateFormatter: DateFormatter = {
     return formatter
 }()
 
-/// A parsed Android APK, read directly from its ZIP contents without shelling
-/// out to any external tool.
+/// A parsed Android APK, read directly from its ZIP contents without shelling  out to any external tool.
 final class AndroidPackage {
     let path: String
     private(set) var name = ""
@@ -574,7 +576,11 @@ final class AndroidPackage {
         static let name: UInt32 = 0x01010003
     }
     
-    init?(path: String) {
+    /// With `iconOnly`, only the manifest, package name and icon are read; used by the
+    /// thumbnail extension, which doesn't need labels, permissions or file details.
+    /// `masksAdaptiveIcon` clips an adaptive icon to a rounded square rather than
+    /// letting it fill the whole image.
+    init?(path: String, iconOnly: Bool = false, masksAdaptiveIcon: Bool = true) {
         self.path = path
         
         guard let archive = ZipArchive(path: path),
@@ -589,6 +595,14 @@ final class AndroidPackage {
         if case .string(let value)? = root.attribute(named: "package")?.value {
             name = value
         }
+        
+        if iconOnly {
+            if let attr = root.firstChild(named: "application")?.attribute(id: AttrID.icon) {
+                loadIcon(attr.value, archive: archive, table: resourceTable, masksAdaptiveIcon: masksAdaptiveIcon)
+            }
+            return
+        }
+        
         if case .intValue(let value)? = root.attribute(id: AttrID.versionCode)?.value {
             versionCode = Int(value)
         }
@@ -619,7 +633,7 @@ final class AndroidPackage {
                 label = Self.resolveString(attr.value, table: resourceTable) ?? ""
             }
             if let attr = application.attribute(id: AttrID.icon) {
-                loadIcon(from: attr.value, archive: archive, table: resourceTable)
+                loadIcon(attr.value, archive: archive, table: resourceTable, masksAdaptiveIcon: masksAdaptiveIcon)
             }
         }
         if label.isEmpty { label = name }
@@ -633,6 +647,14 @@ final class AndroidPackage {
         }
     }
     
+    /// Renders or extracts the `android:icon` drawable into `iconData`/`iconType`.
+    private func loadIcon(_ value: AXMLValue, archive: ZipArchive, table: AndroidResourceTable?, masksAdaptiveIcon: Bool) {
+        guard let icon = DrawableRenderer(archive: archive, table: table, masksAdaptiveIcon: masksAdaptiveIcon).image(for: value) else { return }
+        iconData = icon.data
+        iconType = icon.mimeType
+    }
+    
+    /// A manifest attribute value as text, following `@string/...` references.
     private static func resolveString(_ value: AXMLValue, table: AndroidResourceTable?) -> String? {
         switch value {
         case .string(let s):
@@ -646,35 +668,7 @@ final class AndroidPackage {
         }
     }
     
-    private func loadIcon(from value: AXMLValue, archive: ZipArchive, table: AndroidResourceTable?) {
-        let iconPath: String?
-        switch value {
-        case .string(let s):
-            iconPath = s
-        case .reference(let ref):
-            iconPath = table?.resolveToString(ref, preferredDensity: 480)
-        default:
-            iconPath = nil
-        }
-        guard let iconPath, let rawData = archive.data(for: iconPath), !rawData.isEmpty else { return }
-        
-        if iconPath.hasSuffix(".xml") {
-            if let png = VectorDrawableRenderer.render(data: rawData) {
-                iconData = png
-                iconType = "image/png"
-            }
-        } else {
-            iconData = rawData
-            if iconPath.hasSuffix(".webp") {
-                iconType = "image/webp"
-            } else if iconPath.hasSuffix(".jpg") || iconPath.hasSuffix(".jpeg") {
-                iconType = "image/jpeg"
-            } else {
-                iconType = "image/png"
-            }
-        }
-    }
-    
+    /// Comma-separated ABIs found under `lib/<abi>/`, in archive order; nil if none.
     private static func nativeLibraryABIs(entryNames: [String]) -> String? {
         var abis: [String] = []
         for name in entryNames where name.hasPrefix("lib/") {

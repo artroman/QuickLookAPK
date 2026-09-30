@@ -23,23 +23,29 @@ struct ZipEntry {
 }
 
 final class ZipArchive {
-    private let bytes: [UInt8]
+    /// The whole file, memory-mapped: only the pages actually read (central
+    /// directory, manifest, resource table, icon) are loaded, so even
+    /// multi-gigabyte APKs stay well within a Quick Look extension's memory limit.
+    private let bytes: Data
     private(set) var entries: [String: ZipEntry] = [:]
     private(set) var entryNames: [String] = []
     
+    /// Opens the ZIP file at `path` and reads its central directory; nil if it isn't a ZIP.
     init?(path: String) {
-        guard let data = FileManager.default.contents(atPath: path) else { return nil }
-        self.bytes = [UInt8](data)
+        guard let data = try? Data(contentsOf: URL(fileURLWithPath: path), options: .alwaysMapped) else { return nil }
+        self.bytes = data
         guard parseCentralDirectory() else { return nil }
     }
     
     // MARK: - Byte-level reading
     
+    /// Little-endian UInt16 at `offset`, or 0 when out of bounds.
     private func u16(_ offset: Int) -> UInt16 {
         guard offset >= 0, offset + 2 <= bytes.count else { return 0 }
         return UInt16(bytes[offset]) | (UInt16(bytes[offset + 1]) << 8)
     }
     
+    /// Little-endian UInt32 at `offset`, or 0 when out of bounds.
     private func u32(_ offset: Int) -> UInt32 {
         guard offset >= 0, offset + 4 <= bytes.count else { return 0 }
         return UInt32(bytes[offset])
@@ -50,6 +56,7 @@ final class ZipArchive {
     
     // MARK: - Central directory
     
+    /// Finds the end-of-central-directory record and indexes every entry; false if not a ZIP.
     private func parseCentralDirectory() -> Bool {
         let eocdSignature: UInt32 = 0x0605_4b50
         let minEOCDSize = 22
@@ -112,6 +119,7 @@ final class ZipArchive {
     
     // MARK: - Entry extraction
     
+    /// The uncompressed contents of an entry (stored or deflated); nil if missing or unsupported.
     func data(for entryName: String) -> Data? {
         guard let entry = entries[entryName] else { return nil }
         
@@ -124,12 +132,12 @@ final class ZipArchive {
         let dataStart = localPos + 30 + nameLength + extraLength
         guard dataStart >= 0, dataStart + entry.compressedSize <= bytes.count else { return nil }
         
-        let compressed = Array(bytes[dataStart..<dataStart + entry.compressedSize])
+        let range = dataStart..<dataStart + entry.compressedSize
         switch entry.compressionMethod {
         case 0: // stored (no compression)
-            return Data(compressed)
+            return bytes.subdata(in: range)
         case 8: // deflate
-            return inflate(compressed, expectedSize: entry.uncompressedSize)
+            return inflate(range, expectedSize: entry.uncompressedSize)
         default:
             return nil
         }
@@ -138,19 +146,22 @@ final class ZipArchive {
     /// ZIP's "deflate" entries are raw DEFLATE streams (no zlib/gzip framing).
     /// Apple's `Compression` framework's `COMPRESSION_ZLIB` algorithm operates on
     /// exactly that raw format despite the name.
-    private func inflate(_ input: [UInt8], expectedSize: Int) -> Data? {
+    private func inflate(_ range: Range<Int>, expectedSize: Int) -> Data? {
         guard expectedSize > 0 else { return Data() }
-        var output = [UInt8](repeating: 0, count: expectedSize)
+        guard !range.isEmpty else { return nil }
+        var output = Data(count: expectedSize)
         let decodedCount = output.withUnsafeMutableBytes { outPtr -> Int in
-            input.withUnsafeBytes { inPtr -> Int in
-                compression_decode_buffer(
-                    outPtr.bindMemory(to: UInt8.self).baseAddress!, expectedSize,
-                    inPtr.bindMemory(to: UInt8.self).baseAddress!, input.count,
+            bytes.withUnsafeBytes { filePtr -> Int in
+                guard let outBase = outPtr.bindMemory(to: UInt8.self).baseAddress,
+                      let fileBase = filePtr.bindMemory(to: UInt8.self).baseAddress else { return 0 }
+                return compression_decode_buffer(
+                    outBase, expectedSize,
+                    fileBase + range.lowerBound, range.count,
                     nil, COMPRESSION_ZLIB
                 )
             }
         }
         guard decodedCount == expectedSize else { return nil }
-        return Data(output)
+        return output
     }
 }

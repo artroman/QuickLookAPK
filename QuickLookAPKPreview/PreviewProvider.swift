@@ -9,6 +9,7 @@ import Quartz
 
 class PreviewProvider: QLPreviewProvider, QLPreviewingController {
     
+    /// Returns the HTML preview page for the APK.
     func providePreview(for request: QLFilePreviewRequest) async throws -> QLPreviewReply {
         guard let apk = AndroidPackage(path: request.fileURL.path) else {
             throw CocoaError(.fileReadUnknown)
