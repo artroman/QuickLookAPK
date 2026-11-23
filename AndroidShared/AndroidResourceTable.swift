@@ -13,6 +13,7 @@ import Foundation
 final class AndroidResourceTable {
     private struct TypeChunk {
         let density: Int
+        let locale: String // BCP 47 tag such as "ru", "pt-BR", "sr-Latn"; "" for the default config
         let entryCount: Int
         let entriesStart: Int
         let chunkStart: Int
@@ -202,7 +203,8 @@ final class AndroidResourceTable {
                 let entryCount = Int(u32(pos + 12))
                 let entriesStart = Int(u32(pos + 16))
                 let density = Int(u16(pos + 0x14 + 14))
-                let chunk = TypeChunk(density: density, entryCount: entryCount, entriesStart: entriesStart, chunkStart: pos, headerSize: innerHeaderSize, flags: flags)
+                let locale = readLocale(configStart: pos + 0x14)
+                let chunk = TypeChunk(density: density, locale: locale, entryCount: entryCount, entriesStart: entriesStart, chunkStart: pos, headerSize: innerHeaderSize, flags: flags)
                 types[typeID - 1, default: []].append(chunk)
             default:
                 break
@@ -213,6 +215,42 @@ final class AndroidResourceTable {
         return Package(id: id, typeStrings: typeStrings, keyStrings: keyStrings, types: types)
     }
     
+    /// The locale of the `ResTable_config` at `configStart` as a BCP 47 tag
+    /// (language, optional script, optional region); "" when it has no language.
+    private func readLocale(configStart: Int) -> String {
+        let configSize = Int(u32(configStart))
+        guard configSize >= 12 else { return "" }
+        let language = unpackLocaleCode(configStart + 8, base: UInt8(ascii: "a"))
+        guard !language.isEmpty else { return "" }
+        // Android keeps the deprecated ISO 639 codes for these languages.
+        let legacy = ["iw": "he", "in": "id", "ji": "yi"]
+        var parts = [legacy[language] ?? language]
+        if configSize >= 40 {
+            let script = (0..<4).map { bytes[configStart + 36 + $0] }
+            if !script.contains(0) {
+                parts.append(String(decoding: script, as: UTF8.self))
+            }
+        }
+        let region = unpackLocaleCode(configStart + 10, base: UInt8(ascii: "0"))
+        if !region.isEmpty { parts.append(region) }
+        return parts.joined(separator: "-")
+    }
+
+    /// Decodes a 2-byte language/region field: either two ASCII characters, or (high
+    /// bit set) three 5-bit letters packed relative to `base` (androidfw `unpackLanguageOrRegion`).
+    private func unpackLocaleCode(_ offset: Int, base: UInt8) -> String {
+        guard offset + 2 <= bytes.count else { return "" }
+        let in0 = bytes[offset], in1 = bytes[offset + 1]
+        if in0 == 0 { return "" }
+        if in0 & 0x80 != 0 {
+            let first = in1 & 0x1F
+            let second = ((in1 & 0xE0) >> 5) | ((in0 & 0x03) << 3)
+            let third = (in0 & 0x7C) >> 2
+            return String(decoding: [first + base, second + base, third + base], as: UTF8.self)
+        }
+        return String(decoding: [in0, in1], as: UTF8.self)
+    }
+
     // MARK: - Resolution
     
     /// Resolves a resource ID (as found in a `TYPE_REFERENCE` value) to its value,
@@ -256,6 +294,32 @@ final class AndroidResourceTable {
         return nil
     }
     
+    /// Resolves a string resource in every locale that defines it, in table order and
+    /// with one value per locale ("" is the default config). Alias references are
+    /// followed through the default resolution.
+    func resolveStringVariants(_ resID: UInt32) -> [(locale: String, value: String)] {
+        let packageID = UInt8((resID >> 24) & 0xFF)
+        let typeIndex = Int((resID >> 16) & 0xFF) - 1
+        let entryIndex = Int(resID & 0xFFFF)
+        guard let package = packages.first(where: { $0.id == packageID }),
+              let chunks = package.types[typeIndex] else { return [] }
+
+        var seen = Set<String>()
+        var result: [(locale: String, value: String)] = []
+        for chunk in chunks where !seen.contains(chunk.locale) {
+            let text: String?
+            switch readEntry(chunk: chunk, entryIndex: entryIndex) {
+            case .string(let s)?: text = s
+            case .reference(let next)?: text = resolveToString(next)
+            default: text = nil
+            }
+            guard let text, !text.isEmpty else { continue }
+            seen.insert(chunk.locale)
+            result.append((chunk.locale, text))
+        }
+        return result
+    }
+
     /// The simple value of an entry in one config (classic or compact encoding); nil if the
     /// config doesn't define it or it's a complex (map/style) entry.
     private func readEntry(chunk: TypeChunk, entryIndex: Int) -> AXMLValue? {

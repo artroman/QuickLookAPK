@@ -51,6 +51,7 @@ func getAndroidPlatformNameForApiLevel(_ apiLevel: Int) -> String {
     //36.1: Android 16 QPR2
     case 37: return "Android 17 - Cinnamon Bun"
     //37.1: Android 17 QPR1
+    //37.2: Android 17 QPR2
     default: return "Unknown"
     }
 }
@@ -422,8 +423,51 @@ private let permissionsMap: [String: String] = [
     "WRITE_VOICEMAIL": "Allows an application to modify and remove existing voicemails in the system.",
 ]
 
+/// A collapsed `<details>` section listing the label in every locale except the default
+/// config, which the title already covers. Its summary shows
+/// the label for `language` (any of its regional variants counts), or else the title's
+/// own locale; that row is highlighted in the table. Empty when all locales share one label.
+/// (A `<select>` would open a native menu, which is slow to appear inside Quick Look.)
+private func labelVariantsHTML(_ package: AndroidPackage, language: String?) -> String {
+    guard Set(package.localizedLabels.map(\.value)).count > 1 else { return "" }
+    let variants = package.localizedLabels.filter { !$0.locale.isEmpty }
+
+    func displayName(_ locale: String) -> String {
+        guard !locale.isEmpty else { return "Default" }
+        return locale
+    }
+
+    let sorted = variants.sorted { lhs, rhs in
+        if lhs.locale.isEmpty != rhs.locale.isEmpty { return lhs.locale.isEmpty }
+        return lhs.locale.localizedCaseInsensitiveCompare(rhs.locale) == .orderedAscending
+    }
+    let selected = language.flatMap { AndroidPackage.bestLocale(matching: [$0], in: sorted.map(\.locale)) } ?? package.labelLocale
+    let summary = sorted.first(where: { $0.locale == selected })
+
+    var html = "<details class='label-variants'><summary>"
+    if let summary {
+        html += "<span class='secondary'>\(htmlEscape(displayName(summary.locale))):</span> \(htmlEscape(summary.value)) "
+    }
+    html += "<span class='secondary'>(\(sorted.count) \(plural(sorted.count, "language", "languages")))</span></summary>"
+    html += "<table>"
+    for variant in sorted {
+        let rowClass = variant.locale == selected ? " class='selected'" : ""
+        html += "<tr\(rowClass)><td class='secondary' title='\(htmlEscape(displayName(variant.locale)))'>"
+        html += "\(htmlEscape(displayName(variant.locale)))</td><td>\(htmlEscape(variant.value))</td></tr>"
+    }
+    html += "</table></details>"
+    // Toggle only on a plain click: a click that ends a drag-selection of the summary
+    // text (mouse down and up at different spots) leaves a non-empty selection.
+    html += "<script>document.querySelector('.label-variants summary').addEventListener('click', function(e) {"
+    html += "var selection = window.getSelection();"
+    html += "if (selection && !selection.isCollapsed) { e.preventDefault(); }"
+    html += "});</script>"
+    return html
+}
+
 /// Builds the Quick Look preview page: icon, name, version, SDK levels, file info and permissions.
-func androidPackageHTMLPreview(_ package: AndroidPackage) -> String {
+/// `labelLanguage` is the language pre-selected in the dropdown of localized names.
+func androidPackageHTMLPreview(_ package: AndroidPackage, labelLanguage: String? = nil) -> String {
     var html = ""
     html += "<!doctype html>"
     html += "<html>"
@@ -455,6 +499,11 @@ func androidPackageHTMLPreview(_ package: AndroidPackage) -> String {
     .permission-list { list-style: none; margin: 0; padding: 0; }
     .permission-item { padding: 9px 0; border-bottom: 1px solid rgba(0,0,0,0.08); }
     .permission-item:last-child { border-bottom: none; }
+    .label-variants { font-size: 12px; margin: -4px 0 10px 0; }
+    .label-variants summary { cursor: default; line-height: 1.7; }
+    .label-variants table { border-collapse: collapse; margin: 4px 0 0 14px; }
+    .label-variants td { padding: 2px 12px 2px 0; vertical-align: top; }
+    .label-variants tr.selected td { font-weight: 600; }
     """
     html += "</style></head>"
     html += "<body>"
@@ -467,6 +516,7 @@ func androidPackageHTMLPreview(_ package: AndroidPackage) -> String {
 
     html += "<div>"
     html += "<div class='title'>\(htmlEscape(package.label))</div>"
+    html += labelVariantsHTML(package, language: labelLanguage)
     html += "<div class='info-line'>Version \(htmlEscape(package.versionName)) (\(package.versionCode))</div>"
     html += "<div class='info-line secondary'>\(htmlEscape(package.name))</div>"
     
@@ -480,7 +530,8 @@ func androidPackageHTMLPreview(_ package: AndroidPackage) -> String {
         html += "<div class='info-line secondary'>Max \(getAndroidPlatformNameForApiLevel(package.maxSdkVersion)) (API \(package.maxSdkVersion))</div>"
     }
     if let nativeLibraries = package.nativeLibraries {
-        html += "<div class='info-line secondary'>Native libs: \(htmlEscape(nativeLibraries))</div>"
+        let abiCount = nativeLibraries.components(separatedBy: ", ").count
+        html += "<div class='info-line secondary'>\(plural(abiCount, "Native lib", "Native libs")): \(htmlEscape(nativeLibraries))</div>"
     }
     if let modificationDate = package.modificationDate {
         html += "<div class='info-line secondary'>Modified: \(htmlEscape(fileDateFormatter.string(from: modificationDate)))</div>"
@@ -492,7 +543,7 @@ func androidPackageHTMLPreview(_ package: AndroidPackage) -> String {
     html += "</div>" // .header
 
     if !package.permissions.isEmpty {
-        html += "<div class='section-title'>Permissions:</div>"
+        html += "<div class='section-title'>\(plural(package.permissions.count, "Permission", "Permissions")):</div>"
         html += "<ul class='permission-list'>"
         for permission in package.permissions//.sorted(by: { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending })
         {
@@ -506,24 +557,16 @@ func androidPackageHTMLPreview(_ package: AndroidPackage) -> String {
         html += "</ul>"
     }
 
-    // The Quick Look host's native copy: responder chain doesn't reach the
-    // WebKit editing commands, producing a beep on Cmd-C. WebKit still
-    // dispatches the DOM keydown event first, so intercept Cmd-C there and
-    // perform the copy ourselves.
-    html += "<script>document.addEventListener('keydown', function(e) {"
-    html += "if (!(e.metaKey && (e.key === 'c' || e.key === 'C'))) { return; }"
-    html += "var selection = window.getSelection();"
-    html += "if (selection && selection.toString().length > 0) {"
-    html += "try { document.execCommand('copy'); } catch (err) {}"
-    html += "}"
-    html += "e.preventDefault();"
-    html += "});</script>"
-
     html += "</body></html>"
     return html
 }
 
 /// Escapes text for use in HTML content and quoted attribute values.
+/// `singular` when `count` is 1, otherwise `plural`.
+private func plural(_ count: Int, _ singular: String, _ plural: String) -> String {
+    count == 1 ? singular : plural
+}
+
 private func htmlEscape(_ s: String) -> String {
     s.replacingOccurrences(of: "&", with: "&amp;")
         .replacingOccurrences(of: "<", with: "&lt;")
@@ -552,6 +595,11 @@ final class AndroidPackage {
     private(set) var versionCode = 0
     private(set) var versionName = ""
     private(set) var label = ""
+    /// The label in every locale the APK defines it for ("" = default config), in
+    /// resource-table order. Empty when the label isn't a localizable resource.
+    private(set) var localizedLabels: [(locale: String, value: String)] = []
+    /// The locale `label` was taken from, or nil when it isn't one of `localizedLabels`.
+    private(set) var labelLocale: String?
     private(set) var minSdkVersion = 0
     private(set) var targetSdkVersion = 0
     private(set) var maxSdkVersion = 0
@@ -630,8 +678,19 @@ final class AndroidPackage {
         
         if let application = root.firstChild(named: "application") {
             if let attr = application.attribute(id: AttrID.label) {
-                label = Self.resolveString(attr.value, table: resourceTable) ?? ""
+                if case .reference(let ref) = attr.value, let table = resourceTable {
+                    localizedLabels = table.resolveStringVariants(ref)
+                }
+                
+                // The label in the user's system language, else the default config.
+                let locales = localizedLabels.map(\.locale)
+                labelLocale = Self.bestLocale(matching: Locale.preferredLanguages, in: locales)
+                    ?? locales.first(where: \.isEmpty)
+                
+                label = localizedLabels.first(where: { $0.locale == labelLocale })?.value
+                    ?? Self.resolveString(attr.value, table: resourceTable) ?? ""
             }
+            
             if let attr = application.attribute(id: AttrID.icon) {
                 loadIcon(attr.value, archive: archive, table: resourceTable, masksAdaptiveIcon: masksAdaptiveIcon)
             }
@@ -668,6 +727,21 @@ final class AndroidPackage {
         }
     }
     
+    /// The first of `locales` (BCP 47 tags, "" = default config) that matches one of
+    /// `languages` (e.g. `Locale.preferredLanguages`, or a bare code such as "ru"), tried
+    /// in order: the exact tag, then the bare language, then any regional/script variant
+    /// of that language (so "ru" matches "ru-RU"). nil if none matches.
+    static func bestLocale(matching languages: [String], in locales: [String]) -> String? {
+        for tag in languages {
+            let tag = tag.replacingOccurrences(of: "_", with: "-")
+            guard let language = tag.split(separator: "-").first.map(String.init), !language.isEmpty else { continue }
+            if let exact = locales.first(where: { $0.caseInsensitiveCompare(tag) == .orderedSame }) { return exact }
+            if let bare = locales.first(where: { $0 == language }) { return bare }
+            if let variant = locales.first(where: { $0.hasPrefix(language + "-") }) { return variant }
+        }
+        return nil
+    }
+
     /// Comma-separated ABIs found under `lib/<abi>/`, in archive order; nil if none.
     private static func nativeLibraryABIs(entryNames: [String]) -> String? {
         var abis: [String] = []
